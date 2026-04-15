@@ -1,4 +1,12 @@
+using Microsoft.EntityFrameworkCore;
 using rec_be;
+using rec_be.Data;
+using rec_be.Interfaces.Factory;
+using rec_be.Interfaces.Repository;
+using rec_be.Interfaces.Services;
+using rec_be.Repository;
+using rec_be.Room_FactoryStrategy.Factory;
+using rec_be.Services;
 using Scalar.AspNetCore;
 using System.Text.Json.Serialization;
 
@@ -27,7 +35,7 @@ builder.Services.AddControllers()
 
 builder.Services.AddOpenApi();
 
-/*// PostgreSQL
+// PostgreSQL
 builder.Services.AddDbContext<RACPostgreSQLDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
            .UseSnakeCaseNamingConvention());
@@ -36,8 +44,6 @@ builder.Services.AddDbContext<RACPostgreSQLDbContext>(options =>
 builder.Services.AddScoped<IRoomRepository,         PostgreSQLRoomRepository>();
 builder.Services.AddScoped<IBookingRepository,      PostgreSQLBookingRepository>();
 builder.Services.AddScoped<IGuestRepository,        PostgreSQLGuestRepository>();
-builder.Services.AddScoped<IConfigRepository,       PostgreSQLConfigRepository>();
-builder.Services.AddScoped<ILateCheckOutRepository, PostgreSQLLateCheckOutRepository>();
 
 // ── Factory ───────────────────────────────────────────────────────
 builder.Services.AddScoped<IRoomStrategyFactory, RoomStrategyFactory>();
@@ -46,7 +52,6 @@ builder.Services.AddScoped<IRoomStrategyFactory, RoomStrategyFactory>();
 builder.Services.AddScoped<IBookingService,      BookingService>();
 builder.Services.AddScoped<IRoomService,         RoomService>();
 builder.Services.AddScoped<IGuestService,        GuestService>();
-builder.Services.AddScoped<ILateCheckOutService, LateCheckOutService>();*/
 
 var app = builder.Build();
 

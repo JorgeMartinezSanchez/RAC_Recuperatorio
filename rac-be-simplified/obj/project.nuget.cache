@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Fn6+yfETaeM=",
+  "dgSpecHash": "NqD5L21OJ/0=",
   "success": true,
   "projectFilePath": "C:\\Users\\JORGE MARTINEZ S\\Desktop\\UCB\\2026-1\\Taller de Diseño de Software\\Primer Bloque\\Recup parcial 1\\RAC_Recuperatorio\\rac-be-simplified\\rac-be-simplified.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\JORGE MARTINEZ S\\.nuget\\packages\\efcore.namingconventions\\10.0.1\\efcore.namingconventions.10.0.1.nupkg.sha512",
     "C:\\Users\\JORGE MARTINEZ S\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.5\\microsoft.aspnetcore.openapi.10.0.5.nupkg.sha512",
     "C:\\Users\\JORGE MARTINEZ S\\.nuget\\packages\\microsoft.entityframeworkcore\\10.0.4\\microsoft.entityframeworkcore.10.0.4.nupkg.sha512",
     "C:\\Users\\JORGE MARTINEZ S\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\10.0.4\\microsoft.entityframeworkcore.abstractions.10.0.4.nupkg.sha512",

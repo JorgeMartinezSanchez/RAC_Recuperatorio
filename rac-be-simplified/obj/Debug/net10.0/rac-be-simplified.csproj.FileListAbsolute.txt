@@ -1,0 +1,9 @@
+C:\Users\JORGE MARTINEZ S\Desktop\UCB\2026-1\Taller de Diseño de Software\Primer Bloque\Recup parcial 1\RAC_Recuperatorio\rac-be-simplified\obj\Debug\net10.0\rac-be-simplified.csproj.AssemblyReference.cache
+C:\Users\JORGE MARTINEZ S\Desktop\UCB\2026-1\Taller de Diseño de Software\Primer Bloque\Recup parcial 1\RAC_Recuperatorio\rac-be-simplified\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Users\JORGE MARTINEZ S\Desktop\UCB\2026-1\Taller de Diseño de Software\Primer Bloque\Recup parcial 1\RAC_Recuperatorio\rac-be-simplified\obj\Debug\net10.0\rac-be-simplified.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\JORGE MARTINEZ S\Desktop\UCB\2026-1\Taller de Diseño de Software\Primer Bloque\Recup parcial 1\RAC_Recuperatorio\rac-be-simplified\obj\Debug\net10.0\rac-be-simplified.AssemblyInfoInputs.cache
+C:\Users\JORGE MARTINEZ S\Desktop\UCB\2026-1\Taller de Diseño de Software\Primer Bloque\Recup parcial 1\RAC_Recuperatorio\rac-be-simplified\obj\Debug\net10.0\rac-be-simplified.AssemblyInfo.cs
+C:\Users\JORGE MARTINEZ S\Desktop\UCB\2026-1\Taller de Diseño de Software\Primer Bloque\Recup parcial 1\RAC_Recuperatorio\rac-be-simplified\obj\Debug\net10.0\rac-be-simplified.csproj.CoreCompileInputs.cache
+C:\Users\JORGE MARTINEZ S\Desktop\UCB\2026-1\Taller de Diseño de Software\Primer Bloque\Recup parcial 1\RAC_Recuperatorio\rac-be-simplified\obj\Debug\net10.0\rac-be-simplified.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\JORGE MARTINEZ S\Desktop\UCB\2026-1\Taller de Diseño de Software\Primer Bloque\Recup parcial 1\RAC_Recuperatorio\rac-be-simplified\obj\Debug\net10.0\rac-be-simplified.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\JORGE MARTINEZ S\Desktop\UCB\2026-1\Taller de Diseño de Software\Primer Bloque\Recup parcial 1\RAC_Recuperatorio\rac-be-simplified\obj\Debug\net10.0\rac-be-simplified.sourcelink.json
