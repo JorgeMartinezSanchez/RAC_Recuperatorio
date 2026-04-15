@@ -1,0 +1,6 @@
+@rac_be_simplified_HostAddress = http://localhost:5139
+
+GET {{rac_be_simplified_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
