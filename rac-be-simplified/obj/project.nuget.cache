@@ -1,11 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "cTxy+0m5m5s=",
+  "dgSpecHash": "Fn6+yfETaeM=",
   "success": true,
   "projectFilePath": "C:\\Users\\JORGE MARTINEZ S\\Desktop\\UCB\\2026-1\\Taller de Diseño de Software\\Primer Bloque\\Recup parcial 1\\RAC_Recuperatorio\\rac-be-simplified\\rac-be-simplified.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\JORGE MARTINEZ S\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.5\\microsoft.aspnetcore.openapi.10.0.5.nupkg.sha512",
-    "C:\\Users\\JORGE MARTINEZ S\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+    "C:\\Users\\JORGE MARTINEZ S\\.nuget\\packages\\microsoft.entityframeworkcore\\10.0.4\\microsoft.entityframeworkcore.10.0.4.nupkg.sha512",
+    "C:\\Users\\JORGE MARTINEZ S\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\10.0.4\\microsoft.entityframeworkcore.abstractions.10.0.4.nupkg.sha512",
+    "C:\\Users\\JORGE MARTINEZ S\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\10.0.4\\microsoft.entityframeworkcore.analyzers.10.0.4.nupkg.sha512",
+    "C:\\Users\\JORGE MARTINEZ S\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\10.0.4\\microsoft.entityframeworkcore.relational.10.0.4.nupkg.sha512",
+    "C:\\Users\\JORGE MARTINEZ S\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512",
+    "C:\\Users\\JORGE MARTINEZ S\\.nuget\\packages\\npgsql\\10.0.2\\npgsql.10.0.2.nupkg.sha512",
+    "C:\\Users\\JORGE MARTINEZ S\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\10.0.1\\npgsql.entityframeworkcore.postgresql.10.0.1.nupkg.sha512",
+    "C:\\Users\\JORGE MARTINEZ S\\.nuget\\packages\\scalar.aspnetcore\\2.13.22\\scalar.aspnetcore.2.13.22.nupkg.sha512"
   ],
   "logs": []
 }
