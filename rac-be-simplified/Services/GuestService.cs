@@ -71,6 +71,14 @@ namespace rec_be.Services
 
             return guests.Select(MapToDTO).ToList();
         }
+        public async Task<List<GuestResponseDTO>> GetAllRegistedGuests()
+        {
+            var guests = await guestRepository.GetAllGuests();
+            if (guests == null || guests.Count == 0)
+                throw new Exception("GUEST SERVICE ERROR: No guests found in the hotel.");
+
+            return guests.Select(MapToDTO).ToList();
+        }
 
         private static GuestResponseDTO MapToDTO(Guest g) =>
             new GuestResponseDTO

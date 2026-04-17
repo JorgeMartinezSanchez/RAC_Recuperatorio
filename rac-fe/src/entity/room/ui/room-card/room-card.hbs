@@ -1,0 +1,20 @@
+<!-- src/entity/room/ui/room-card/room-card.hbs -->
+<div class="room-card room-card--{{#if occupied}}occupied{{else}}available{{/if}}" data-room-id="{{id}}">
+    <div class="room-card__header">
+        <span class="room-card__number">#{{roomNumber}}</span>
+        <span class="room-card__status {{statusClass}}">{{statusText}}</span>
+    </div>
+    
+    <div class="room-card__type">{{roomType}}</div>
+    
+    <div class="room-card__details">
+        <div class="room-card__capacity">
+            <span class="room-card__capacity-label">Capacity</span>
+            <span class="room-card__capacity-value">{{capacity}} guests</span>
+        </div>
+        <div class="room-card__price">
+            <span class="room-card__price-label">Price/night</span>
+            <span class="room-card__price-value">${{price}}</span>
+        </div>
+    </div>
+</div>

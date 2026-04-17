@@ -1,0 +1,78 @@
+/* src/app/app-root.css */
+.app-root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-root__nav {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.app-root__nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-root__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-h);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.app-root__logo:hover {
+    color: var(--accent);
+}
+
+.app-root__logo-icon {
+    font-size: 1.5rem;
+}
+
+.app-root__nav-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.app-root__nav-link {
+    padding: 0.5rem 1rem;
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.app-root__nav-link:hover {
+    background: var(--accent-bg);
+    color: var(--accent);
+}
+
+.app-root__content {
+    flex: 1;
+    padding: 2rem;
+}
+
+@media (max-width: 768px) {
+    .app-root__nav-container {
+        padding: 0.75rem 1rem;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .app-root__content {
+        padding: 1rem;
+    }
+}

@@ -11,5 +11,6 @@ namespace rec_be.Interfaces.Services
         Task<List<GuestResponseDTO>> AddGuestList(List<GuestRequestDTO> guests);
         Task<GuestResponseDTO> AddGuest(GuestRequestDTO guest);
         Task<List<GuestResponseDTO>> GetGuestsFromBookingId(int BookingId);
+        Task<List<GuestResponseDTO>> GetAllRegistedGuests();
     }
 }

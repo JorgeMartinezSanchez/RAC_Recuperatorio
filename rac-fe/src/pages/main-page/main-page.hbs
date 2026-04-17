@@ -1,0 +1,65 @@
+<!-- src/pages/main-page/main-page.hbs -->
+<div class="dashboard">
+    <!-- src/pages/main-page/main-page.hbs - Actualizar el header -->
+    <div class="dashboard__header">
+        <h1 class="dashboard__title">Hotel Dashboard</h1>
+        <div class="dashboard__actions">
+            <a href="/create-booking" class="dashboard__create-btn" data-link>
+                + New Booking
+            </a>
+            <button class="dashboard__refresh-btn" data-action="refresh">Refresh Data</button>
+        </div>
+    </div>
+
+    <div class="dashboard__stats">
+        <div class="stat-card">
+            <div class="stat-card__value">{{stats.totalBookings}}</div>
+            <div class="stat-card__label">Total Bookings</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card__value">{{stats.activeBookings}}</div>
+            <div class="stat-card__label">Active Bookings</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card__value">{{stats.availableRooms}}</div>
+            <div class="stat-card__label">Available Rooms</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card__value">{{stats.totalGuests}}</div>
+            <div class="stat-card__label">Total Guests</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card__value">${{stats.totalRevenue}}</div>
+            <div class="stat-card__label">Total Revenue</div>
+        </div>
+    </div>
+
+    <div class="dashboard__grid">
+        <div class="dashboard__section">
+            <h2 class="section-title">Recent Bookings</h2>
+            <div class="bookings-list">
+                {{#each recentBookings}}
+                    <booking-card data-booking-id="{{id}}"></booking-card>
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="dashboard__section">
+            <h2 class="section-title">Available Rooms</h2>
+            <div class="rooms-grid">
+                {{#each availableRooms}}
+                    <room-card data-room-number="{{roomNumber}}"></room-card>
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="dashboard__section">
+            <h2 class="section-title">Recent Guests</h2>
+            <div class="guests-list">
+                {{#each recentGuests}}
+                    <guest-card data-guest-id="{{id}}"></guest-card>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>

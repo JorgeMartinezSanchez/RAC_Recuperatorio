@@ -1,0 +1,78 @@
+/* src/entity/guest/ui/guest-card/guest-card.css */
+.guest-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+}
+
+.guest-card:hover {
+    box-shadow: var(--shadow);
+}
+
+.guest-card__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.guest-card__avatar {
+    width: 48px;
+    height: 48px;
+    background: var(--accent-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--accent);
+}
+
+.guest-card__name {
+    flex: 1;
+}
+
+.guest-card__full-name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-h);
+}
+
+.guest-card__id {
+    font-size: 0.75rem;
+    color: var(--text);
+}
+
+.guest-card__details {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.guest-card__detail {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+}
+
+.guest-card__detail-label {
+    color: var(--text);
+    font-weight: 500;
+}
+
+.guest-card__detail-value {
+    color: var(--text-h);
+}
+
+.guest-card__email {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.guest-card__email:hover {
+    text-decoration: underline;
+}

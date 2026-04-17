@@ -1,0 +1,105 @@
+<!-- src/pages/create-booking-page/create-booking-page.hbs -->
+<div class="create-booking">
+    <div class="create-booking__header">
+        <h1 class="create-booking__title">Create New Booking</h1>
+        <a href="/" class="create-booking__back-link" data-link>← Back to Dashboard</a>
+    </div>
+
+    <div class="create-booking__container">
+        <!-- Formulario principal -->
+        <div class="create-booking__form">
+            <!-- Selección de fechas -->
+            <div class="create-booking__section">
+                <h2 class="create-booking__section-title">1. Select Dates</h2>
+                <div class="create-booking__date-group">
+                    <div class="create-booking__field">
+                        <label for="startDate" class="create-booking__label">Check-in Date</label>
+                        <input type="date" id="startDate" class="create-booking__input" required>
+                    </div>
+                    <div class="create-booking__field">
+                        <label for="endDate" class="create-booking__label">Check-out Date</label>
+                        <input type="date" id="endDate" class="create-booking__input" required>
+                    </div>
+                </div>
+                <div class="create-booking__nights-info">
+                    <span>Total nights: </span>
+                    <strong class="create-booking__nights-count">0</strong>
+                </div>
+            </div>
+
+            <!-- Selección de habitación -->
+            <div class="create-booking__section">
+                <h2 class="create-booking__section-title">2. Select Room</h2>
+                <div class="create-booking__rooms-grid">
+                    {{#each rooms}}
+                        <div class="create-booking__room-card {{#if (eq this.id ../selectedRoomId)}}create-booking__room-card--selected{{/if}}" 
+                             data-room-id="{{this.id}}">
+                            <room-card data-room-number="{{this.roomNumber}}"></room-card>
+                            {{#if (eq this.id ../selectedRoomId)}}
+                                <div class="create-booking__selected-badge">✓ Selected</div>
+                            {{/if}}
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+            <!-- Selección de huéspedes -->
+            <div class="create-booking__section">
+                <h2 class="create-booking__section-title">3. Select Guests</h2>
+                <div class="create-booking__guests-grid">
+                    {{#each guests}}
+                        <label class="create-booking__guest-checkbox" data-guest-id="{{this.id}}">
+                            <input type="checkbox" value="{{this.id}}" 
+                                   {{#if (includes ../selectedGuestIds this.id)}}checked{{/if}}>
+                            <guest-card data-guest-id="{{this.id}}"></guest-card>
+                        </label>
+                    {{/each}}
+                </div>
+                
+                <div class="create-booking__selected-guests">
+                    <h3 class="create-booking__subtitle">Selected Guests:</h3>
+                    <div class="create-booking__selected-guests-list">
+                        {{#each selectedGuestIds}}
+                            {{#with (lookup ../guests this)}}
+                                <div class="create-booking__selected-guest">
+                                    <span>{{this.firstName}} {{this.lastName}}</span>
+                                </div>
+                            {{/with}}
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumen y acciones -->
+            <div class="create-booking__summary">
+                <div class="create-booking__total">
+                    <span class="create-booking__total-label">Total Price:</span>
+                    <span class="create-booking__total-price">0.00</span>
+                    <span class="create-booking__currency">USD</span>
+                </div>
+                <div class="create-booking__actions">
+                    <button type="button" class="create-booking__button create-booking__button--cancel" 
+                            data-action="cancel-booking">
+                        Cancel
+                    </button>
+                    <button type="button" class="create-booking__button create-booking__button--submit" 
+                            data-action="submit-booking">
+                        Create Booking
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mensajes de estado -->
+        <div class="create-booking__messages">
+            <div class="create-booking__error"></div>
+            <div class="create-booking__success"></div>
+        </div>
+
+        <!-- Loading overlay -->
+        <div class="create-booking__loading">
+            <div class="create-booking__spinner"></div>
+            <p>Creating booking...</p>
+        </div>
+    </div>
+</div>

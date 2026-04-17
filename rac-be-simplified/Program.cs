@@ -15,15 +15,17 @@ var builder = WebApplication.CreateBuilder(args);
 // ── Configurar CORS ANTES de cualquier cosa ──────────────────────
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngular", policy =>
+    options.AddPolicy("AllowFrontend", policy =>
     {
         policy.WithOrigins(
-                "http://localhost:4200",
-                "http://localhost:4201",
-                "https://localhost:4200"
+                "http://localhost:5173",   // Vite
+                "http://localhost:5174",   // Vite (alternativo)
+                "http://localhost:4200",   // Angular
+                "http://localhost:4201"    // Angular
             )
-            .AllowAnyMethod()
-            .AllowAnyHeader();
+            .AllowAnyMethod()              // GET, POST, PUT, DELETE, etc.
+            .AllowAnyHeader()              // Content-Type, Authorization, etc.
+            .AllowCredentials();           // Si usas cookies/autenticación
     });
 });
 
@@ -56,7 +58,8 @@ builder.Services.AddScoped<IGuestService,        GuestService>();
 var app = builder.Build();
 
 // ── Usar CORS ANTES de los otros middlewares ─────────────────────
-app.UseCors("AllowAngular");
+// ✅ IMPORTANTE: Usar el mismo nombre de la política que definiste
+app.UseCors("AllowFrontend");  // ← Cambiado de "AllowAngular" a "AllowFrontend"
 
 if (app.Environment.IsDevelopment())
 {

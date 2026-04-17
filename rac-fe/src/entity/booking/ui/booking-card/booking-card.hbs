@@ -1,0 +1,31 @@
+<!-- src/entity/booking/ui/booking-card/booking-card.hbs -->
+<div class="booking-card" data-booking-id="{{id}}">
+    <div class="booking-card__header">
+        <div class="booking-card__room">
+            <span class="booking-card__room-number">Room {{roomNumber}}</span>
+            <span class="booking-card__room-type">({{roomTypeName}})</span>
+        </div>
+        <div class="booking-card__status {{statusClass}}">
+            {{status}}
+        </div>
+    </div>
+    
+    <div class="booking-card__dates">
+        <div class="booking-card__date-range">
+            <span class="booking-card__date-label">Check-in:</span>
+            <span class="booking-card__date-value">{{startDate}}</span>
+        </div>
+        <div class="booking-card__date-range">
+            <span class="booking-card__date-label">Check-out:</span>
+            <span class="booking-card__date-value">{{endDate}}</span>
+        </div>
+    </div>
+    
+    <div class="booking-card__footer">
+        <span class="booking-card__total-label">Total:</span>
+        <span class="booking-card__total">
+            ${{total}}
+            <span class="booking-card__total-currency">USD</span>
+        </span>
+    </div>
+</div>

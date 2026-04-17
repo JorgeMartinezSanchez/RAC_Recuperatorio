@@ -1,0 +1,25 @@
+<!-- src/entity/guest/ui/guest-card/guest-card.hbs -->
+<div class="guest-card" data-guest-id="{{id}}">
+    <div class="guest-card__header">
+        <div class="guest-card__avatar">
+            {{firstName.[0]}}{{lastName.[0]}}
+        </div>
+        <div class="guest-card__name">
+            <div class="guest-card__full-name">{{fullName}}</div>
+            <div class="guest-card__id">ID: {{idCard}}</div>
+        </div>
+    </div>
+    
+    <div class="guest-card__details">
+        <div class="guest-card__detail">
+            <span class="guest-card__detail-label">Phone:</span>
+            <span class="guest-card__detail-value">{{phoneNumber}}</span>
+        </div>
+        <div class="guest-card__detail">
+            <span class="guest-card__detail-label">Email:</span>
+            <a href="mailto:{{email}}" class="guest-card__detail-value guest-card__email">
+                {{email}}
+            </a>
+        </div>
+    </div>
+</div>

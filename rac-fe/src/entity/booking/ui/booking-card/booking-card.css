@@ -1,0 +1,107 @@
+/* src/entity/booking/ui/booking-card/booking-card.css */
+.booking-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+}
+
+.booking-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+}
+
+.booking-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.booking-card__room {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-h);
+}
+
+.booking-card__room-number {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.booking-card__room-type {
+    font-size: 0.875rem;
+    color: var(--text);
+    margin-left: 0.5rem;
+}
+
+.booking-card__status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.booking-card__status--active {
+    background: #10b98120;
+    color: #10b981;
+}
+
+.booking-card__status--completed {
+    background: #3b82f620;
+    color: #3b82f6;
+}
+
+.booking-card__status--cancelled {
+    background: #ef444420;
+    color: #ef4444;
+}
+
+.booking-card__status--pending {
+    background: #f59e0b20;
+    color: #f59e0b;
+}
+
+.booking-card__dates {
+    margin-bottom: 1rem;
+}
+
+.booking-card__date-range {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+}
+
+.booking-card__date-label {
+    color: var(--text);
+    font-weight: 500;
+}
+
+.booking-card__date-value {
+    color: var(--text-h);
+    font-weight: 600;
+}
+
+.booking-card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+}
+
+.booking-card__total {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.booking-card__total-currency {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
