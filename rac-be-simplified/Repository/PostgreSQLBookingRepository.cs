@@ -59,8 +59,7 @@ namespace rec_be.Repository
         {
             var booking = await dbContext.Bookings.FirstOrDefaultAsync(booking => (booking.RoomId == BookingRequestDto.RoomId)
                                                                                 &&(booking.StartDate == BookingRequestDto.StartDate)
-                                                                                &&(booking.EndDate == BookingRequestDto.EndDate)
-                                                                                &&(booking.Total == BookingRequestDto.Total));
+                                                                                &&(booking.EndDate == BookingRequestDto.EndDate));
             if(booking == null)
             {
                 throw new Exception("No booking was found.");

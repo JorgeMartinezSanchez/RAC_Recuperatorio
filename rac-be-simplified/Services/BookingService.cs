@@ -78,18 +78,12 @@ namespace rec_be.Services
                     throw new Exception($"BOOKING SERVICE ERROR: Room capacity is {strategy.GetMaxCapacity()} guests, but you're trying to book for {guestCount} guests.");
 
                 // Prevent overlapping reservations
-                var allBookings = await _bookingRepo.GetAllBookings();
-                bool overlaps = allBookings.Any(b =>
-                    b.RoomId == bookingRequest.RoomId &&
-                    b.Status != "cancelled" &&
-                    b.Status != "finished" &&
-                    b.StartDate < bookingRequest.EndDate &&
-                    b.EndDate > bookingRequest.StartDate);
 
-                if (overlaps)
+                if (await Overlaps(bookingRequest))
                     throw new Exception("BOOKING SERVICE ERROR: Room is already reserved for that date range.");
 
                 var total = room.RoomType!.Price * (bookingRequest.EndDate.DayNumber - bookingRequest.StartDate.DayNumber);
+                Console.WriteLine($"Room Price = {room.RoomType!.Price}, Total Price Calculated = {total}");
                 // Create the booking
                 var newBooking = new Booking
                 {
@@ -100,7 +94,7 @@ namespace rec_be.Services
                     CheckInDate = default,
                     CheckOutDate = default,
                     Total = total,
-                    CreationDate = DateTime.Now
+                    CreationDate = DateTime.UtcNow
                 };
 
                 // Log before saving
@@ -216,6 +210,18 @@ namespace rec_be.Services
             
             await _bookingRepo.ChangeBookingStatus(booking);
             return booking.Total;
+        }
+        // Overlaping o Soplamiento
+        public async Task<bool> Overlaps(BookingRequestDTO bookingRequest)
+        {
+            var allBookings = await _bookingRepo.GetAllBookings();
+            return allBookings.Any(b =>
+                    b.RoomId == bookingRequest.RoomId &&
+                    b.Status != "cancelled" &&
+                    b.Status != "finished" &&
+                    b.StartDate < bookingRequest.EndDate &&
+                    b.EndDate > bookingRequest.StartDate);
+
         }
     }
 }

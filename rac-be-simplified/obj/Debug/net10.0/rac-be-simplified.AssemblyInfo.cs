@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("rac-be-simplified")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b0a456176fe1888bf9fa7d558a9ff9e18be85ab")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+864b6d462a4aff11be3cbc2ab02c82a1c8dd093b")]
 [assembly: System.Reflection.AssemblyProductAttribute("rac-be-simplified")]
 [assembly: System.Reflection.AssemblyTitleAttribute("rac-be-simplified")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

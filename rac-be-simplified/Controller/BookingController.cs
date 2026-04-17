@@ -19,18 +19,20 @@ namespace rec_be.Controller
             bookingService = _bookingService;
         }
         
-        [HttpPost("Create")]
-        public async Task<IActionResult> CreateBooking([FromBody] BookingRequestDTO request)
+        [HttpPost("Create")]  // ← Añade el parámetro a la ruta
+        public async Task<IActionResult> CreateBooking([FromBody] BookingRequestDTO bookingRequest)
         {
             try
             {
-                if (request == null)
+                if (bookingRequest == null)
+                {
                     return BadRequest("Booking request cannot be null.");
+                }
                 
-                if (request.GuestIds == null || !request.GuestIds.Any())
+                if (bookingRequest.GuestIds == null || !bookingRequest.GuestIds.Any())
                     return BadRequest("At least one guest must be selected for the booking.");
                 
-                var booking = await bookingService.CreateBooking(request, request.GuestIds);
+                var booking = await bookingService.CreateBooking(bookingRequest, bookingRequest.GuestIds);
                 return Ok(booking);
             }
             catch (Exception ex)
@@ -65,6 +67,12 @@ namespace rec_be.Controller
         {
             var booking = await bookingService.Cancel(BookingId);
             return Ok(booking);
+        }
+        [HttpPost("test")]
+        public async Task<IActionResult> Test([FromBody] BookingRequestDTO testRequest)
+        {
+            Console.WriteLine($"Test received: {System.Text.Json.JsonSerializer.Serialize(testRequest)}");
+            return Ok(new { message = "Endpoint works!", data = testRequest });
         }
     }
 }

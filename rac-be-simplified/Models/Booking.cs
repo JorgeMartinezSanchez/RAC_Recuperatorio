@@ -12,8 +12,8 @@ namespace rec_be.Models
         public DateOnly StartDate { get; set; }
         public DateOnly EndDate { get; set; }
         public string Status { get; set; } = "";
-        public DateTime CheckInDate { get; set; }
-        public DateTime CheckOutDate { get; set; }
+        public DateTime? CheckInDate { get; set; }
+        public DateTime? CheckOutDate { get; set; }
         public decimal Total { get; set; }
         public DateTime CreationDate { get; set; }
 

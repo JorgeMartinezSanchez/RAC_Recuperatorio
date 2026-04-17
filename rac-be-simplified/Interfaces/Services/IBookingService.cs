@@ -18,5 +18,6 @@ namespace rec_be.Interfaces.Services
         Task<BookingResponseDTO> Cancel(int bookingId);
         bool ValidateDate(DateOnly StartDate, DateOnly EndDate);
         Task<List<BookingResponseDTO>> GetAllBookings();
+        Task<bool> Overlaps(BookingRequestDTO bookingRequest);
     }
 }
