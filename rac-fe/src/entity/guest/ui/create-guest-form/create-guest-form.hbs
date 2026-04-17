@@ -1,0 +1,44 @@
+<!-- src/entity/guest/ui/create-guest-card/create-guest-card.hbs -->
+<div class="create-guest-card">
+    <h3 class="create-guest-card__title">Register New Guest</h3>
+    
+    <form class="create-guest-form" id="createGuestForm">
+        <div class="create-guest-form__row">
+            <div class="create-guest-form__input">
+                <label data-required="true">First Name</label>
+                <input type="text" id="firstName" name="firstName" placeholder="Enter first name" required>
+            </div>
+
+            <div class="create-guest-form__input">
+                <label>Second Name</label>
+                <input type="text" id="secondName" name="secondName" placeholder="Enter second name (optional)">
+            </div>
+        </div>
+
+        <div class="create-guest-form__row">
+            <div class="create-guest-form__input">
+                <label data-required="true">Last Name</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Enter last name" required>
+            </div>
+
+            <div class="create-guest-form__input">
+                <label data-required="true">ID Card</label>
+                <input type="text" id="idCard" name="idCard" placeholder="Enter ID card number" required>
+            </div>
+        </div>
+
+        <div class="create-guest-form__row">
+            <div class="create-guest-form__input">
+                <label data-required="true">Phone Number</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter phone number" required>
+            </div>
+
+            <div class="create-guest-form__input">
+                <label data-required="true">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter email address" required>
+            </div>
+        </div>
+
+        <button type="submit" class="create-guest__submit">Register Guest</button>
+    </form>
+</div>

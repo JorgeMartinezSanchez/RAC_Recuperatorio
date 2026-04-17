@@ -8,12 +8,15 @@ import { guestsApi } from '../../entity/guest/api/guest-api';
 import type { BookingRequestDTO } from '../../entity/booking/model/booking-dtos';
 import type { RoomResponseDTO } from '../../entity/room/model/room-dtos';
 import type { GuestResponseDTO } from '../../entity/guest/model/guest-dtos';
+import { formatToDDMMYYYY, isValidDateRange, calculateNights } from '../../shared/utils/date-utils';
 
-// Importar helpers de Handlebars
+// Importar componentes
 import '../../app/handlebars-helper';
+import '../../entity/guest/ui/create-guest-form/create-guest-form'; // ← Importar el componente
 
 export class CreateBookingPage extends HTMLElement {
     private compiledTemplate: HandlebarsTemplateDelegate;
+    private guestModal: HTMLElement | null = null;
     private rooms: RoomResponseDTO[] = [];
     private guests: GuestResponseDTO[] = [];
     private selectedRoomId: number | null = null;
@@ -49,6 +52,24 @@ export class CreateBookingPage extends HTMLElement {
             guests: this.guests,
             selectedRoomId: this.selectedRoomId,
             selectedGuestIds: this.selectedGuestIds
+        });
+        
+        // Después de renderizar, pasar los datos a los componentes room-card
+        this.passDataToComponents();
+    }
+
+    private passDataToComponents() {
+        // Pasar datos a las room cards
+        const roomCards = this.querySelectorAll('room-card');
+        roomCards.forEach(card => {
+            const roomId = card.getAttribute('data-room-id');
+            if (roomId && !card.hasAttribute('data-populated')) {
+                const room = this.rooms.find(r => r.id === parseInt(roomId));
+                if (room && (card as any).setData) {
+                    (card as any).setData(room);
+                    card.setAttribute('data-populated', 'true');
+                }
+            }
         });
     }
 
@@ -95,6 +116,34 @@ export class CreateBookingPage extends HTMLElement {
         if (endDateInput) {
             endDateInput.addEventListener('change', () => this.updateDateRange());
         }
+
+        // Botón para abrir modal de guest
+        const openModalBtn = this.querySelector('[data-action="open-guest-modal"]');
+        if (openModalBtn) {
+            openModalBtn.removeEventListener('click', this.openGuestModal);
+            openModalBtn.addEventListener('click', this.openGuestModal.bind(this));
+        }
+
+        // Botones para cerrar modal
+        const closeModalBtns = this.querySelectorAll('[data-action="close-modal"]');
+        closeModalBtns.forEach(btn => {
+            btn.removeEventListener('click', this.closeGuestModal);
+            btn.addEventListener('click', this.closeGuestModal.bind(this));
+        });
+
+        // Escuchar evento de guest creado
+        const createGuestCard = this.querySelector('create-guest-form');
+        if (createGuestCard) {
+            createGuestCard.removeEventListener('guest-created', this.handleGuestCreated);
+            createGuestCard.addEventListener('guest-created', this.handleGuestCreated.bind(this));
+        }
+
+        // Botones para remover guest seleccionado
+        const removeGuestBtns = this.querySelectorAll('[data-remove-guest]');
+        removeGuestBtns.forEach(btn => {
+            btn.removeEventListener('click', this.handleRemoveGuest);
+            btn.addEventListener('click', this.handleRemoveGuest.bind(this));
+        });
     }
 
     private toggleRoomSelection(roomId: number) {
@@ -120,11 +169,11 @@ export class CreateBookingPage extends HTMLElement {
     }
 
     private updateDateRange() {
-        const startDate = (this.querySelector('#startDate') as HTMLInputElement)?.value;
-        const endDate = (this.querySelector('#endDate') as HTMLInputElement)?.value;
+        const startDateRaw = (this.querySelector('#startDate') as HTMLInputElement)?.value;
+        const endDateRaw = (this.querySelector('#endDate') as HTMLInputElement)?.value;
         
-        if (startDate && endDate) {
-            const nights = this.calculateNights(startDate, endDate);
+        if (startDateRaw && endDateRaw) {
+            const nights = calculateNights(startDateRaw, endDateRaw);
             const nightsDisplay = this.querySelector('.create-booking__nights-count');
             if (nightsDisplay) {
                 nightsDisplay.textContent = nights.toString();
@@ -136,12 +185,12 @@ export class CreateBookingPage extends HTMLElement {
         }
     }
 
-    private calculateNights(startDate: string, endDate: string): number {
+    /*private calculateNights(startDate: string, endDate: string): number {
         const start = new Date(startDate);
         const end = new Date(endDate);
         const diffTime = Math.abs(end.getTime() - start.getTime());
         return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    }
+    }*/
 
     private updateTotalPrice(nights: number) {
         const selectedRoom = this.rooms.find(r => r.id === this.selectedRoomId);
@@ -155,26 +204,26 @@ export class CreateBookingPage extends HTMLElement {
     }
 
     private async submitBooking() {
-        const startDate = (this.querySelector('#startDate') as HTMLInputElement)?.value;
-        const endDate = (this.querySelector('#endDate') as HTMLInputElement)?.value;
+        const startDateRaw = (this.querySelector('#startDate') as HTMLInputElement)?.value;
+        const endDateRaw = (this.querySelector('#endDate') as HTMLInputElement)?.value;
 
         if (!this.selectedRoomId) {
             this.showError('Please select a room');
             return;
         }
 
-        if (!startDate || !endDate) {
+        if (!startDateRaw || !endDateRaw) {
             this.showError('Please select check-in and check-out dates');
             return;
         }
 
-        if (this.selectedGuestIds.length === 0) {
-            this.showError('Please select at least one guest');
+        if (!isValidDateRange(startDateRaw, endDateRaw)) {
+            this.showError('Check-out date must be after check-in date');
             return;
         }
 
-        const start = new Date(startDate);
-        const end = new Date(endDate);
+        const start = new Date(startDateRaw);
+        const end = new Date(endDateRaw);
         
         if (start >= end) {
             this.showError('Check-out date must be after check-in date');
@@ -183,8 +232,8 @@ export class CreateBookingPage extends HTMLElement {
 
         const bookingData: BookingRequestDTO = {
             roomId: this.selectedRoomId,
-            startDate: startDate,
-            endDate: endDate,
+            startDate: formatToDDMMYYYY(startDateRaw),
+            endDate: formatToDDMMYYYY(endDateRaw),
             guestIds: this.selectedGuestIds
         };
 
@@ -245,6 +294,62 @@ export class CreateBookingPage extends HTMLElement {
         this.selectedGuestIds = [];
         this.render();
         this.attachEventListeners();
+    }
+
+    private openGuestModal() {
+        this.guestModal = this.querySelector('#guestModal');
+        if (this.guestModal) {
+            this.guestModal.style.display = 'flex';
+        }
+    }
+
+    private closeGuestModal() {
+        if (this.guestModal) {
+            this.guestModal.style.display = 'none';
+        }
+    }
+
+    private async handleGuestCreated(event: CustomEvent) {
+        const newGuest = event.detail.guest as GuestResponseDTO;
+        
+        // Cerrar el modal
+        this.closeGuestModal();
+        
+        // Actualizar la lista de huéspedes
+        await this.loadData();
+        
+        // Re-renderizar
+        this.render();
+        
+        // Auto-seleccionar el nuevo huésped
+        if (!this.selectedGuestIds.includes(newGuest.id)) {
+            this.selectedGuestIds.push(newGuest.id);
+        }
+        
+        // Re-renderizar con la selección actualizada
+        this.render();
+        this.attachEventListeners();
+        
+        // Mostrar mensaje de éxito
+        this.showSuccess(`Guest ${newGuest.firstName} ${newGuest.lastName} added and selected!`);
+    }
+
+    private handleRemoveGuest(event: Event) {
+        const button = event.currentTarget as HTMLButtonElement;
+        const guestId = parseInt(button.getAttribute('data-remove-guest') || '0');
+        
+        this.selectedGuestIds = this.selectedGuestIds.filter(id => id !== guestId);
+        
+        this.render();
+        this.attachEventListeners();
+    }
+
+    // Asegúrate de que el modal se cierre al hacer clic fuera
+    private handleModalBackdropClick(event: Event) {
+        const target = event.target as HTMLElement;
+        if (target.classList.contains('create-booking__modal-backdrop')) {
+            this.closeGuestModal();
+        }
     }
 }
 

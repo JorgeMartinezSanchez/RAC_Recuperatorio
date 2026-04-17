@@ -33,8 +33,8 @@
                 <div class="create-booking__rooms-grid">
                     {{#each rooms}}
                         <div class="create-booking__room-card {{#if (eq this.id ../selectedRoomId)}}create-booking__room-card--selected{{/if}}" 
-                             data-room-id="{{this.id}}">
-                            <room-card data-room-number="{{this.roomNumber}}"></room-card>
+                            data-room-id="{{this.id}}">
+                            <room-card data-room-id="{{this.id}}" data-room-number="{{this.roomNumber}}"></room-card>
                             {{#if (eq this.id ../selectedRoomId)}}
                                 <div class="create-booking__selected-badge">✓ Selected</div>
                             {{/if}}
@@ -45,7 +45,12 @@
 
             <!-- Selección de huéspedes -->
             <div class="create-booking__section">
-                <h2 class="create-booking__section-title">3. Select Guests</h2>
+                <div class="create-booking__section-header">
+                    <h2 class="create-booking__section-title">3. Select Guests</h2>
+                    <button type="button" class="create-booking__create-guest-button" data-action="open-guest-modal">
+                        + Add Guest
+                    </button>
+                </div>
                 <div class="create-booking__guests-grid">
                     {{#each guests}}
                         <label class="create-booking__guest-checkbox" data-guest-id="{{this.id}}">
@@ -63,6 +68,7 @@
                             {{#with (lookup ../guests this)}}
                                 <div class="create-booking__selected-guest">
                                     <span>{{this.firstName}} {{this.lastName}}</span>
+                                    <button type="button" data-remove-guest="{{this.id}}" class="create-booking__remove-guest">×</button>
                                 </div>
                             {{/with}}
                         {{/each}}
@@ -86,6 +92,20 @@
                             data-action="submit-booking">
                         Create Booking
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para crear huésped -->
+        <div class="create-booking__modal" id="guestModal" style="display: none;">
+            <div class="create-booking__modal-backdrop" data-action="close-modal"></div>
+            <div class="create-booking__modal-content">
+                <div class="create-booking__modal-header">
+                    <h2>Add New Guest</h2>
+                    <button class="create-booking__modal-close" data-action="close-modal">×</button>
+                </div>
+                <div class="create-booking__modal-body">
+                    <create-guest-form></create-guest-form>
                 </div>
             </div>
         </div>

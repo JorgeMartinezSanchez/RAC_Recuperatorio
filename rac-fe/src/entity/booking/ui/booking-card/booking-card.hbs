@@ -12,11 +12,11 @@
     
     <div class="booking-card__dates">
         <div class="booking-card__date-range">
-            <span class="booking-card__date-label">Check-in:</span>
+            <span class="booking-card__date-label">Starting Date</span>
             <span class="booking-card__date-value">{{startDate}}</span>
         </div>
         <div class="booking-card__date-range">
-            <span class="booking-card__date-label">Check-out:</span>
+            <span class="booking-card__date-label">Ending Date</span>
             <span class="booking-card__date-value">{{endDate}}</span>
         </div>
     </div>
@@ -28,4 +28,17 @@
             <span class="booking-card__total-currency">USD</span>
         </span>
     </div>
+
+    {{#ifEquals status "pending"}}
+        <button class="booking-card__set-as-active">Set As Active</button>
+    {{/ifEquals}}
+
+    {{#ifEquals status "active"}}
+        <button class="booking-card__set-as-finished">Finish</button>
+    {{/ifEquals}}
+
+    {{#ifNotEquals status "cancelled"}}
+        <button class="booking-card__cancel-booking">Cancel</button>
+    {{/ifNotEquals}}
+
 </div>

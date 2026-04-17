@@ -13,6 +13,12 @@ export class RoomCard extends HTMLElement {
         this.compiledTemplate = Handlebars.compile(templateSource);
     }
 
+    // Método público para recibir datos directamente
+    public setData(room: RoomResponseDTO) {
+        this.roomData = room;
+        this.render();
+    }
+
     set data(room: RoomResponseDTO) {
         this.roomData = room;
         this.render();
@@ -34,8 +40,12 @@ export class RoomCard extends HTMLElement {
     }
 
     connectedCallback() {
+        // No cargar datos automáticamente si ya tenemos el atributo data-room-id
         const roomNumber = this.getAttribute('data-room-number');
-        if (roomNumber) {
+        const roomId = this.getAttribute('data-room-id');
+        
+        // Solo cargar si no hay datos y tenemos roomNumber
+        if (!this.roomData && roomNumber) {
             this.loadRoomData(roomNumber);
         }
     }
