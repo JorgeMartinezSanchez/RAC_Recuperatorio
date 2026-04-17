@@ -1,7 +1,7 @@
 // src/entity/guest/ui/create-guest-card/create-guest-card.ts
 import Handlebars from "handlebars";
 import templateSource from './create-guest-form.hbs?raw';
-import './create-guest-card.css';
+import './create-guest-form.css';
 import type { GuestRequestDTO, GuestResponseDTO } from '../../model/guest-dtos';
 import { guestsApi } from '../../api/guest-api';
 

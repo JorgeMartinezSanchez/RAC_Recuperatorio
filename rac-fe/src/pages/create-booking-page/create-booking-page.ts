@@ -132,11 +132,11 @@ export class CreateBookingPage extends HTMLElement {
         });
 
         // Escuchar evento de guest creado
-        const createGuestCard = this.querySelector('create-guest-form');
+        /*const createGuestCard = this.querySelector('create-guest-form');
         if (createGuestCard) {
             createGuestCard.removeEventListener('guest-created', this.handleGuestCreated);
             createGuestCard.addEventListener('guest-created', this.handleGuestCreated.bind(this));
-        }
+        }*/
 
         // Botones para remover guest seleccionado
         const removeGuestBtns = this.querySelectorAll('[data-remove-guest]');
