@@ -22,6 +22,8 @@ export class CreateBookingPage extends HTMLElement {
     private guests: GuestResponseDTO[] = [];
     private selectedRoomId: number | null = null;
     private selectedGuestIds: number[] = [];
+    private startDateValue: string = '';
+    private endDateValue: string = '';
 
     constructor() {
         super();
@@ -34,15 +36,14 @@ export class CreateBookingPage extends HTMLElement {
         this.handleRemoveGuest = this.handleRemoveGuest.bind(this);
         this.openGuestModal = this.openGuestModal.bind(this);
         this.closeGuestModal = this.closeGuestModal.bind(this);
-        this.handleGuestCreatedEvent = this.handleGuestCreatedEvent.bind(this); // Nuevo método
-        this.updateDateRange = this.updateDateRange.bind(this);
+        this.handleGuestCreatedEvent = this.handleGuestCreatedEvent.bind(this);
+        this.handleStartDateChange = this.handleStartDateChange.bind(this);
+        this.handleEndDateChange = this.handleEndDateChange.bind(this);
     }
-
 
     async connectedCallback() {
         await this.loadData();
         this.render();
-        this.attachEventListeners();
     }
 
     private async loadData() {
@@ -66,14 +67,36 @@ export class CreateBookingPage extends HTMLElement {
             selectedGuestIds: this.selectedGuestIds
         });
         
-        // Después de renderizar, inicializar los componentes y datos
+        // Inicializar todo después del render
         this.initializeRoomCards();
         this.initializeGuestCards();
+        this.restoreDateValues();
+        this.attachEventListeners();
         this.updateTotalPriceDisplay();
     }
 
+    private restoreDateValues() {
+        const startDateInput = this.querySelector('#startDate') as HTMLInputElement;
+        const endDateInput = this.querySelector('#endDate') as HTMLInputElement;
+        
+        if (startDateInput && this.startDateValue) {
+            startDateInput.value = this.startDateValue;
+        }
+        if (endDateInput && this.endDateValue) {
+            endDateInput.value = this.endDateValue;
+        }
+        
+        // Actualizar contador de noches
+        if (this.startDateValue && this.endDateValue) {
+            const nights = calculateNights(this.startDateValue, this.endDateValue);
+            const nightsDisplay = this.querySelector('.create-booking__nights-count');
+            if (nightsDisplay) {
+                nightsDisplay.textContent = nights.toString();
+            }
+        }
+    }
+
     private initializeRoomCards() {
-        // Crear las room cards dentro de los placeholders
         const placeholders = this.querySelectorAll('.room-card-placeholder');
         placeholders.forEach(placeholder => {
             const roomId = placeholder.getAttribute('data-room-id');
@@ -93,7 +116,6 @@ export class CreateBookingPage extends HTMLElement {
     }
 
     private initializeGuestCards() {
-        // Asegurar que los guest cards tengan sus datos
         const guestCards = this.querySelectorAll('guest-card');
         guestCards.forEach(card => {
             const guestId = card.getAttribute('data-guest-id');
@@ -107,15 +129,16 @@ export class CreateBookingPage extends HTMLElement {
         });
     }
 
-   private attachEventListeners() {
-        // Selección de habitación - usar el contenedor padre para event delegation
+    private attachEventListeners() {
+        // IMPORTANTE: Usar event delegation para la selección de habitaciones
         const roomsGrid = this.querySelector('#roomsGrid');
         if (roomsGrid) {
+            // Remover listener anterior si existe
             roomsGrid.removeEventListener('click', this.handleRoomSelection);
             roomsGrid.addEventListener('click', this.handleRoomSelection);
         }
 
-        // Selección de huéspedes
+        // Checkboxes de huéspedes
         const guestCheckboxes = this.querySelectorAll('.create-booking__guest-checkbox input');
         guestCheckboxes.forEach(checkbox => {
             checkbox.removeEventListener('change', this.handleGuestCheckboxChange);
@@ -136,42 +159,41 @@ export class CreateBookingPage extends HTMLElement {
             cancelBtn.addEventListener('click', this.handleCancelBooking);
         }
 
-        // Fechas
+        // Inputs de fecha
         const startDateInput = this.querySelector('#startDate') as HTMLInputElement;
         const endDateInput = this.querySelector('#endDate') as HTMLInputElement;
         
         if (startDateInput) {
-            startDateInput.removeEventListener('change', this.updateDateRange);
-            startDateInput.addEventListener('change', this.updateDateRange);
+            startDateInput.removeEventListener('change', this.handleStartDateChange);
+            startDateInput.addEventListener('change', this.handleStartDateChange);
         }
         
         if (endDateInput) {
-            endDateInput.removeEventListener('change', this.updateDateRange);
-            endDateInput.addEventListener('change', this.updateDateRange);
+            endDateInput.removeEventListener('change', this.handleEndDateChange);
+            endDateInput.addEventListener('change', this.handleEndDateChange);
         }
 
-        // Botón para abrir modal de guest
+        // Modal
         const openModalBtn = this.querySelector('[data-action="open-guest-modal"]');
         if (openModalBtn) {
             openModalBtn.removeEventListener('click', this.openGuestModal);
             openModalBtn.addEventListener('click', this.openGuestModal);
         }
 
-        // Botones para cerrar modal
         const closeModalBtns = this.querySelectorAll('[data-action="close-modal"]');
         closeModalBtns.forEach(btn => {
             btn.removeEventListener('click', this.closeGuestModal);
             btn.addEventListener('click', this.closeGuestModal);
         });
 
-        // Escuchar evento de guest creado - CORREGIDO
+        // Evento de guest creado
         const createGuestForm = this.querySelector('create-guest-form');
         if (createGuestForm) {
             createGuestForm.removeEventListener('guest-created', this.handleGuestCreatedEvent);
             createGuestForm.addEventListener('guest-created', this.handleGuestCreatedEvent);
         }
 
-        // Botones para remover guest seleccionado
+        // Botones de remover guest
         const removeGuestBtns = this.querySelectorAll('[data-remove-guest]');
         removeGuestBtns.forEach(btn => {
             btn.removeEventListener('click', this.handleRemoveGuest);
@@ -179,68 +201,66 @@ export class CreateBookingPage extends HTMLElement {
         });
     }
 
-    private handleRoomSelection(event: Event) {
-        const target = event.target as HTMLElement;
-        // Buscar el contenedor de la habitación
-        const roomCard = target.closest('[data-room-id]');
-        
-        if (roomCard) {
-            const roomId = parseInt(roomCard.getAttribute('data-room-id') || '0');
-            if (roomId) {
-                this.toggleRoomSelection(roomId);
+    private handleStartDateChange(event: Event) {
+        const input = event.target as HTMLInputElement;
+        this.startDateValue = input.value;
+        this.updateNightsAndPrice();
+    }
+
+    private handleEndDateChange(event: Event) {
+        const input = event.target as HTMLInputElement;
+        this.endDateValue = input.value;
+        this.updateNightsAndPrice();
+    }
+
+    private updateNightsAndPrice() {
+        if (this.startDateValue && this.endDateValue) {
+            const nights = calculateNights(this.startDateValue, this.endDateValue);
+            const nightsDisplay = this.querySelector('.create-booking__nights-count');
+            if (nightsDisplay) {
+                nightsDisplay.textContent = nights.toString();
             }
+            this.updateTotalPriceDisplay();
         }
     }
 
-    private toggleRoomSelection(roomId: number) {
-        if (this.selectedRoomId === roomId) {
-            this.selectedRoomId = null;
-        } else {
-            this.selectedRoomId = roomId;
+    private handleRoomSelection(event: Event) {
+        const target = event.target as HTMLElement;
+        // Buscar el contenedor de la habitación (el div con data-room-id)
+        const roomContainer = target.closest('[data-room-id]');
+        
+        if (roomContainer) {
+            const roomId = parseInt(roomContainer.getAttribute('data-room-id') || '0');
+            if (roomId && !isNaN(roomId)) {
+                // Toggle selection
+                if (this.selectedRoomId === roomId) {
+                    this.selectedRoomId = null;
+                } else {
+                    this.selectedRoomId = roomId;
+                }
+                // Re-renderizar
+                this.render();
+            }
         }
-        this.render(); // Re-renderizar para actualizar la clase selected
     }
 
     private handleGuestCheckboxChange(event: Event) {
         const input = event.target as HTMLInputElement;
         const guestId = parseInt(input.value);
-        this.toggleGuestSelection(guestId, input.checked);
-    }
-
-    private toggleGuestSelection(guestId: number, isSelected: boolean) {
-        if (isSelected) {
+        
+        if (input.checked) {
             if (!this.selectedGuestIds.includes(guestId)) {
                 this.selectedGuestIds.push(guestId);
             }
         } else {
             this.selectedGuestIds = this.selectedGuestIds.filter(id => id !== guestId);
         }
-        this.render(); // Re-renderizar para actualizar la lista
-    }
-
-    private updateDateRange() {
-        const startDateRaw = (this.querySelector('#startDate') as HTMLInputElement)?.value;
-        const endDateRaw = (this.querySelector('#endDate') as HTMLInputElement)?.value;
-        
-        if (startDateRaw && endDateRaw) {
-            const nights = calculateNights(startDateRaw, endDateRaw);
-            const nightsDisplay = this.querySelector('.create-booking__nights-count');
-            if (nightsDisplay) {
-                nightsDisplay.textContent = nights.toString();
-            }
-            
-            if (this.selectedRoomId) {
-                this.updateTotalPriceDisplay();
-            }
-        }
+        this.render();
     }
 
     private updateTotalPriceDisplay() {
-        const startDateRaw = (this.querySelector('#startDate') as HTMLInputElement)?.value;
-        const endDateRaw = (this.querySelector('#endDate') as HTMLInputElement)?.value;
-        
-        if (startDateRaw && endDateRaw && this.selectedRoomId) {
-            const nights = calculateNights(startDateRaw, endDateRaw);
+        if (this.startDateValue && this.endDateValue && this.selectedRoomId) {
+            const nights = calculateNights(this.startDateValue, this.endDateValue);
             const selectedRoom = this.rooms.find(r => r.id === this.selectedRoomId);
             if (selectedRoom) {
                 const total = selectedRoom.price * nights;
@@ -253,36 +273,25 @@ export class CreateBookingPage extends HTMLElement {
     }
 
     private async handleSubmitBooking() {
-        const startDateRaw = (this.querySelector('#startDate') as HTMLInputElement)?.value;
-        const endDateRaw = (this.querySelector('#endDate') as HTMLInputElement)?.value;
-
         if (!this.selectedRoomId) {
             this.showError('Please select a room');
             return;
         }
 
-        if (!startDateRaw || !endDateRaw) {
+        if (!this.startDateValue || !this.endDateValue) {
             this.showError('Please select check-in and check-out dates');
             return;
         }
 
-        if (!isValidDateRange(startDateRaw, endDateRaw)) {
-            this.showError('Check-out date must be after check-in date');
-            return;
-        }
-
-        const start = new Date(startDateRaw);
-        const end = new Date(endDateRaw);
-        
-        if (start >= end) {
+        if (!isValidDateRange(this.startDateValue, this.endDateValue)) {
             this.showError('Check-out date must be after check-in date');
             return;
         }
 
         const bookingData: BookingRequestDTO = {
             roomId: this.selectedRoomId,
-            startDate: formatToDDMMYYYY(startDateRaw),
-            endDate: formatToDDMMYYYY(endDateRaw),
+            startDate: formatToDDMMYYYY(this.startDateValue),
+            endDate: formatToDDMMYYYY(this.endDateValue),
             guestIds: this.selectedGuestIds
         };
 
@@ -298,7 +307,7 @@ export class CreateBookingPage extends HTMLElement {
             
         } catch (error) {
             console.error('Error creating booking:', error);
-            this.showError('Failed to create booking. Please try again.');
+            this.showError(`Failed to create booking: ${error}`);
         } finally {
             this.showLoading(false);
         }
@@ -307,13 +316,8 @@ export class CreateBookingPage extends HTMLElement {
     private handleCancelBooking() {
         this.selectedRoomId = null;
         this.selectedGuestIds = [];
-        
-        // Limpiar fechas
-        const startDateInput = this.querySelector('#startDate') as HTMLInputElement;
-        const endDateInput = this.querySelector('#endDate') as HTMLInputElement;
-        if (startDateInput) startDateInput.value = '';
-        if (endDateInput) endDateInput.value = '';
-        
+        this.startDateValue = '';
+        this.endDateValue = '';
         this.render();
     }
 
@@ -363,30 +367,21 @@ export class CreateBookingPage extends HTMLElement {
         }
     }
 
-    // NUEVO MÉTODO: Maneja el evento de guest creado como EventListener
     private handleGuestCreatedEvent(event: Event) {
         const customEvent = event as CustomEvent;
         const newGuest = customEvent.detail.guest as GuestResponseDTO;
         this.handleGuestCreated(newGuest);
     }
 
-    // Método existente pero modificado para recibir el guest directamente
     private async handleGuestCreated(newGuest: GuestResponseDTO) {
-        // Cerrar el modal
         this.closeGuestModal();
-        
-        // Actualizar la lista de huéspedes
         await this.loadData();
         
-        // Auto-seleccionar el nuevo huésped
         if (!this.selectedGuestIds.includes(newGuest.id)) {
             this.selectedGuestIds.push(newGuest.id);
         }
         
-        // Re-renderizar
         this.render();
-        
-        // Mostrar mensaje de éxito
         this.showSuccess(`Guest ${newGuest.firstName} ${newGuest.lastName} added and selected!`);
     }
 
