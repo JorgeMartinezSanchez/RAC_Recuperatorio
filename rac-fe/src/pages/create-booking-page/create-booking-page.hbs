@@ -30,11 +30,11 @@
             <!-- Selección de habitación -->
             <div class="create-booking__section">
                 <h2 class="create-booking__section-title">2. Select Room</h2>
-                <div class="create-booking__rooms-grid">
+                <div class="create-booking__rooms-grid" id="roomsGrid">
                     {{#each rooms}}
                         <div class="create-booking__room-card {{#if (eq this.id ../selectedRoomId)}}create-booking__room-card--selected{{/if}}" 
                             data-room-id="{{this.id}}">
-                            <room-card data-room-id="{{this.id}}" data-room-number="{{this.roomNumber}}"></room-card>
+                            <div class="room-card-placeholder" data-room-id="{{this.id}}" data-room-number="{{this.roomNumber}}"></div>
                             {{#if (eq this.id ../selectedRoomId)}}
                                 <div class="create-booking__selected-badge">✓ Selected</div>
                             {{/if}}
