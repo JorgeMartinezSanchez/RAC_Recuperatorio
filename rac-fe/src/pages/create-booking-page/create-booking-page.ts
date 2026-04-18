@@ -12,7 +12,8 @@ import { formatToDDMMYYYY, isValidDateRange, calculateNights } from '../../share
 
 // Importar componentes
 import '../../app/handlebars-helper';
-import '../../entity/guest/ui/create-guest-form/create-guest-form'; // ← Importar el componente
+import '../../entity/guest/ui/create-guest-form/create-guest-form';
+import '../../entity/room/ui/room-card/room-card';
 
 export class CreateBookingPage extends HTMLElement {
     private compiledTemplate: HandlebarsTemplateDelegate;
@@ -25,7 +26,18 @@ export class CreateBookingPage extends HTMLElement {
     constructor() {
         super();
         this.compiledTemplate = Handlebars.compile(templateSource);
+        // Bind de métodos
+        this.handleRoomSelection = this.handleRoomSelection.bind(this);
+        this.handleSubmitBooking = this.handleSubmitBooking.bind(this);
+        this.handleCancelBooking = this.handleCancelBooking.bind(this);
+        this.handleGuestCheckboxChange = this.handleGuestCheckboxChange.bind(this);
+        this.handleRemoveGuest = this.handleRemoveGuest.bind(this);
+        this.openGuestModal = this.openGuestModal.bind(this);
+        this.closeGuestModal = this.closeGuestModal.bind(this);
+        this.handleGuestCreatedEvent = this.handleGuestCreatedEvent.bind(this); // Nuevo método
+        this.updateDateRange = this.updateDateRange.bind(this);
     }
+
 
     async connectedCallback() {
         await this.loadData();
@@ -54,55 +66,74 @@ export class CreateBookingPage extends HTMLElement {
             selectedGuestIds: this.selectedGuestIds
         });
         
-        // Después de renderizar, pasar los datos a los componentes room-card
-        this.passDataToComponents();
+        // Después de renderizar, inicializar los componentes y datos
+        this.initializeRoomCards();
+        this.initializeGuestCards();
+        this.updateTotalPriceDisplay();
     }
 
-    private passDataToComponents() {
-        // Pasar datos a las room cards
-        const roomCards = this.querySelectorAll('room-card');
-        roomCards.forEach(card => {
-            const roomId = card.getAttribute('data-room-id');
-            if (roomId && !card.hasAttribute('data-populated')) {
+    private initializeRoomCards() {
+        // Crear las room cards dentro de los placeholders
+        const placeholders = this.querySelectorAll('.room-card-placeholder');
+        placeholders.forEach(placeholder => {
+            const roomId = placeholder.getAttribute('data-room-id');
+            const roomNumber = placeholder.getAttribute('data-room-number');
+            
+            if (roomId && !placeholder.hasChildNodes()) {
                 const room = this.rooms.find(r => r.id === parseInt(roomId));
-                if (room && (card as any).setData) {
-                    (card as any).setData(room);
+                if (room) {
+                    const roomCard = document.createElement('room-card');
+                    roomCard.setAttribute('data-room-id', roomId);
+                    roomCard.setAttribute('data-room-number', roomNumber || '');
+                    (roomCard as any).setData(room);
+                    placeholder.appendChild(roomCard);
+                }
+            }
+        });
+    }
+
+    private initializeGuestCards() {
+        // Asegurar que los guest cards tengan sus datos
+        const guestCards = this.querySelectorAll('guest-card');
+        guestCards.forEach(card => {
+            const guestId = card.getAttribute('data-guest-id');
+            if (guestId && !card.hasAttribute('data-populated')) {
+                const guest = this.guests.find(g => g.id === parseInt(guestId));
+                if (guest && (card as any).setData) {
+                    (card as any).setData(guest);
                     card.setAttribute('data-populated', 'true');
                 }
             }
         });
     }
 
-    private attachEventListeners() {
-        // Selección de habitación
-        const roomCards = this.querySelectorAll('[data-room-id]');
-        roomCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const roomId = parseInt(card.getAttribute('data-room-id') || '0');
-                this.toggleRoomSelection(roomId);
-            });
-        });
+   private attachEventListeners() {
+        // Selección de habitación - usar el contenedor padre para event delegation
+        const roomsGrid = this.querySelector('#roomsGrid');
+        if (roomsGrid) {
+            roomsGrid.removeEventListener('click', this.handleRoomSelection);
+            roomsGrid.addEventListener('click', this.handleRoomSelection);
+        }
 
         // Selección de huéspedes
         const guestCheckboxes = this.querySelectorAll('.create-booking__guest-checkbox input');
         guestCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', (e) => {
-                const input = e.target as HTMLInputElement;
-                const guestId = parseInt(input.value);
-                this.toggleGuestSelection(guestId, input.checked);
-            });
+            checkbox.removeEventListener('change', this.handleGuestCheckboxChange);
+            checkbox.addEventListener('change', this.handleGuestCheckboxChange);
         });
 
         // Botón submit
         const submitBtn = this.querySelector('[data-action="submit-booking"]');
         if (submitBtn) {
-            submitBtn.addEventListener('click', () => this.submitBooking());
+            submitBtn.removeEventListener('click', this.handleSubmitBooking);
+            submitBtn.addEventListener('click', this.handleSubmitBooking);
         }
 
         // Botón cancelar
         const cancelBtn = this.querySelector('[data-action="cancel-booking"]');
         if (cancelBtn) {
-            cancelBtn.addEventListener('click', () => this.resetForm());
+            cancelBtn.removeEventListener('click', this.handleCancelBooking);
+            cancelBtn.addEventListener('click', this.handleCancelBooking);
         }
 
         // Fechas
@@ -110,40 +141,55 @@ export class CreateBookingPage extends HTMLElement {
         const endDateInput = this.querySelector('#endDate') as HTMLInputElement;
         
         if (startDateInput) {
-            startDateInput.addEventListener('change', () => this.updateDateRange());
+            startDateInput.removeEventListener('change', this.updateDateRange);
+            startDateInput.addEventListener('change', this.updateDateRange);
         }
         
         if (endDateInput) {
-            endDateInput.addEventListener('change', () => this.updateDateRange());
+            endDateInput.removeEventListener('change', this.updateDateRange);
+            endDateInput.addEventListener('change', this.updateDateRange);
         }
 
         // Botón para abrir modal de guest
         const openModalBtn = this.querySelector('[data-action="open-guest-modal"]');
         if (openModalBtn) {
             openModalBtn.removeEventListener('click', this.openGuestModal);
-            openModalBtn.addEventListener('click', this.openGuestModal.bind(this));
+            openModalBtn.addEventListener('click', this.openGuestModal);
         }
 
         // Botones para cerrar modal
         const closeModalBtns = this.querySelectorAll('[data-action="close-modal"]');
         closeModalBtns.forEach(btn => {
             btn.removeEventListener('click', this.closeGuestModal);
-            btn.addEventListener('click', this.closeGuestModal.bind(this));
+            btn.addEventListener('click', this.closeGuestModal);
         });
 
-        // Escuchar evento de guest creado
-        /*const createGuestCard = this.querySelector('create-guest-form');
-        if (createGuestCard) {
-            createGuestCard.removeEventListener('guest-created', this.handleGuestCreated);
-            createGuestCard.addEventListener('guest-created', this.handleGuestCreated.bind(this));
-        }*/
+        // Escuchar evento de guest creado - CORREGIDO
+        const createGuestForm = this.querySelector('create-guest-form');
+        if (createGuestForm) {
+            createGuestForm.removeEventListener('guest-created', this.handleGuestCreatedEvent);
+            createGuestForm.addEventListener('guest-created', this.handleGuestCreatedEvent);
+        }
 
         // Botones para remover guest seleccionado
         const removeGuestBtns = this.querySelectorAll('[data-remove-guest]');
         removeGuestBtns.forEach(btn => {
             btn.removeEventListener('click', this.handleRemoveGuest);
-            btn.addEventListener('click', this.handleRemoveGuest.bind(this));
+            btn.addEventListener('click', this.handleRemoveGuest);
         });
+    }
+
+    private handleRoomSelection(event: Event) {
+        const target = event.target as HTMLElement;
+        // Buscar el contenedor de la habitación
+        const roomCard = target.closest('[data-room-id]');
+        
+        if (roomCard) {
+            const roomId = parseInt(roomCard.getAttribute('data-room-id') || '0');
+            if (roomId) {
+                this.toggleRoomSelection(roomId);
+            }
+        }
     }
 
     private toggleRoomSelection(roomId: number) {
@@ -152,8 +198,13 @@ export class CreateBookingPage extends HTMLElement {
         } else {
             this.selectedRoomId = roomId;
         }
-        this.render();
-        this.attachEventListeners();
+        this.render(); // Re-renderizar para actualizar la clase selected
+    }
+
+    private handleGuestCheckboxChange(event: Event) {
+        const input = event.target as HTMLInputElement;
+        const guestId = parseInt(input.value);
+        this.toggleGuestSelection(guestId, input.checked);
     }
 
     private toggleGuestSelection(guestId: number, isSelected: boolean) {
@@ -164,8 +215,7 @@ export class CreateBookingPage extends HTMLElement {
         } else {
             this.selectedGuestIds = this.selectedGuestIds.filter(id => id !== guestId);
         }
-        this.render();
-        this.attachEventListeners();
+        this.render(); // Re-renderizar para actualizar la lista
     }
 
     private updateDateRange() {
@@ -180,30 +230,29 @@ export class CreateBookingPage extends HTMLElement {
             }
             
             if (this.selectedRoomId) {
-                this.updateTotalPrice(nights);
+                this.updateTotalPriceDisplay();
             }
         }
     }
 
-    /*private calculateNights(startDate: string, endDate: string): number {
-        const start = new Date(startDate);
-        const end = new Date(endDate);
-        const diffTime = Math.abs(end.getTime() - start.getTime());
-        return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    }*/
-
-    private updateTotalPrice(nights: number) {
-        const selectedRoom = this.rooms.find(r => r.id === this.selectedRoomId);
-        if (selectedRoom) {
-            const total = selectedRoom.price * nights;
-            const totalDisplay = this.querySelector('.create-booking__total-price');
-            if (totalDisplay) {
-                totalDisplay.textContent = total.toFixed(2);
+    private updateTotalPriceDisplay() {
+        const startDateRaw = (this.querySelector('#startDate') as HTMLInputElement)?.value;
+        const endDateRaw = (this.querySelector('#endDate') as HTMLInputElement)?.value;
+        
+        if (startDateRaw && endDateRaw && this.selectedRoomId) {
+            const nights = calculateNights(startDateRaw, endDateRaw);
+            const selectedRoom = this.rooms.find(r => r.id === this.selectedRoomId);
+            if (selectedRoom) {
+                const total = selectedRoom.price * nights;
+                const totalDisplay = this.querySelector('.create-booking__total-price');
+                if (totalDisplay) {
+                    totalDisplay.textContent = total.toFixed(2);
+                }
             }
         }
     }
 
-    private async submitBooking() {
+    private async handleSubmitBooking() {
         const startDateRaw = (this.querySelector('#startDate') as HTMLInputElement)?.value;
         const endDateRaw = (this.querySelector('#endDate') as HTMLInputElement)?.value;
 
@@ -243,7 +292,6 @@ export class CreateBookingPage extends HTMLElement {
             this.showSuccess('Booking created successfully!');
             
             setTimeout(() => {
-                // Navegar al dashboard
                 window.history.pushState({}, "", "/");
                 window.dispatchEvent(new PopStateEvent('popstate'));
             }, 2000);
@@ -254,6 +302,19 @@ export class CreateBookingPage extends HTMLElement {
         } finally {
             this.showLoading(false);
         }
+    }
+
+    private handleCancelBooking() {
+        this.selectedRoomId = null;
+        this.selectedGuestIds = [];
+        
+        // Limpiar fechas
+        const startDateInput = this.querySelector('#startDate') as HTMLInputElement;
+        const endDateInput = this.querySelector('#endDate') as HTMLInputElement;
+        if (startDateInput) startDateInput.value = '';
+        if (endDateInput) endDateInput.value = '';
+        
+        this.render();
     }
 
     private showError(message: string) {
@@ -289,13 +350,6 @@ export class CreateBookingPage extends HTMLElement {
         }
     }
 
-    private resetForm() {
-        this.selectedRoomId = null;
-        this.selectedGuestIds = [];
-        this.render();
-        this.attachEventListeners();
-    }
-
     private openGuestModal() {
         this.guestModal = this.querySelector('#guestModal');
         if (this.guestModal) {
@@ -309,26 +363,28 @@ export class CreateBookingPage extends HTMLElement {
         }
     }
 
-    private async handleGuestCreated(event: CustomEvent) {
-        const newGuest = event.detail.guest as GuestResponseDTO;
-        
+    // NUEVO MÉTODO: Maneja el evento de guest creado como EventListener
+    private handleGuestCreatedEvent(event: Event) {
+        const customEvent = event as CustomEvent;
+        const newGuest = customEvent.detail.guest as GuestResponseDTO;
+        this.handleGuestCreated(newGuest);
+    }
+
+    // Método existente pero modificado para recibir el guest directamente
+    private async handleGuestCreated(newGuest: GuestResponseDTO) {
         // Cerrar el modal
         this.closeGuestModal();
         
         // Actualizar la lista de huéspedes
         await this.loadData();
         
-        // Re-renderizar
-        this.render();
-        
         // Auto-seleccionar el nuevo huésped
         if (!this.selectedGuestIds.includes(newGuest.id)) {
             this.selectedGuestIds.push(newGuest.id);
         }
         
-        // Re-renderizar con la selección actualizada
+        // Re-renderizar
         this.render();
-        this.attachEventListeners();
         
         // Mostrar mensaje de éxito
         this.showSuccess(`Guest ${newGuest.firstName} ${newGuest.lastName} added and selected!`);
@@ -339,17 +395,7 @@ export class CreateBookingPage extends HTMLElement {
         const guestId = parseInt(button.getAttribute('data-remove-guest') || '0');
         
         this.selectedGuestIds = this.selectedGuestIds.filter(id => id !== guestId);
-        
         this.render();
-        this.attachEventListeners();
-    }
-
-    // Asegúrate de que el modal se cierre al hacer clic fuera
-    private handleModalBackdropClick(event: Event) {
-        const target = event.target as HTMLElement;
-        if (target.classList.contains('create-booking__modal-backdrop')) {
-            this.closeGuestModal();
-        }
     }
 }
 
