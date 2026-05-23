@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RAC_Recuperatorio")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+66b551094eace8757373da0056394dfedfded529")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ba72e409ea2a99211834a8b7fe766005a738b746")]
 [assembly: System.Reflection.AssemblyProductAttribute("RAC_Recuperatorio")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RAC_Recuperatorio")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
