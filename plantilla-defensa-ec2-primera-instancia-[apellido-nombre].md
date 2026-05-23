@@ -56,12 +56,8 @@
 
 **Commit de la refactorización:**
 ```
-refactor([scope]): descripción breve
-```
-*Ejemplos:*
-```
-refactor(backend): extraer lógica de validación de reserva a método separado
-refactor(frontend): renombrar variable 'x' a 'precioTotal' en servicio de carrito
+refactor(backend): Comentar enpoints sin utilizar en el Controlador de Guests, porque pueden ser de utilidad en algun futuro
+refactor(backend): Reemplazar _.any()_ con _.count() != 0_ para dar mas seguridad a la hora de validar la lista de los guests, si no estan vacíos o no. 
 ```
 
 ---

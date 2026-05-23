@@ -266,5 +266,13 @@ namespace rec_be.Tests.Services
             // Assert
             Assert.Equal("cancelled", booking.Status);
         }
+
+        [Fact]
+        public async Task GuestIds_Count_Test()
+        {
+            var guestIds = new List<int>(); // VACIO
+            
+            _service.
+        }
     }
 }

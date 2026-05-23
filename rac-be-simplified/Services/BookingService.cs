@@ -104,7 +104,7 @@ namespace rec_be.Services
 
                 Console.WriteLine($"Booking created with ID: {created.Id}");
 
-                if (guestIds != null && guestIds.Any())
+                if (guestIds != null && guestIds.Count() != 0)
                 {
                     foreach (var guestId in guestIds)
                     {
