@@ -1,0 +1,382 @@
+{
+  "$schema": "http://json.schemastore.org/sarif-1.0.0",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "Compilador de Microsoft (R) Visual C#",
+        "version": "5.3.0.0",
+        "fileVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+        "semanticVersion": "5.3.0",
+        "language": "es-MX"
+      },
+      "results": [
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Guests\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/JORGE%20MARTINEZ%20S/Desktop/UCB/2026-1/Taller%20de%20Dise%C3%B1o%20de%20Software/Primer%20Bloque/Recup%20parcial%201/RAC_Recuperatorio/rac-be-simplified/Data/RACPostgreSQLDbContext.cs",
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 16,
+                  "endLine": 9,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/JORGE%20MARTINEZ%20S/Desktop/UCB/2026-1/Taller%20de%20Dise%C3%B1o%20de%20Software/Primer%20Bloque/Recup%20parcial%201/RAC_Recuperatorio/rac-be-simplified/Data/RACPostgreSQLDbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 29,
+                  "endLine": 10,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"RoomTypes\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/JORGE%20MARTINEZ%20S/Desktop/UCB/2026-1/Taller%20de%20Dise%C3%B1o%20de%20Software/Primer%20Bloque/Recup%20parcial%201/RAC_Recuperatorio/rac-be-simplified/Data/RACPostgreSQLDbContext.cs",
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 16,
+                  "endLine": 9,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/JORGE%20MARTINEZ%20S/Desktop/UCB/2026-1/Taller%20de%20Dise%C3%B1o%20de%20Software/Primer%20Bloque/Recup%20parcial%201/RAC_Recuperatorio/rac-be-simplified/Data/RACPostgreSQLDbContext.cs",
+                "region": {
+                  "startLine": 11,
+                  "startColumn": 32,
+                  "endLine": 11,
+                  "endColumn": 41
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Rooms\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/JORGE%20MARTINEZ%20S/Desktop/UCB/2026-1/Taller%20de%20Dise%C3%B1o%20de%20Software/Primer%20Bloque/Recup%20parcial%201/RAC_Recuperatorio/rac-be-simplified/Data/RACPostgreSQLDbContext.cs",
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 16,
+                  "endLine": 9,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/JORGE%20MARTINEZ%20S/Desktop/UCB/2026-1/Taller%20de%20Dise%C3%B1o%20de%20Software/Primer%20Bloque/Recup%20parcial%201/RAC_Recuperatorio/rac-be-simplified/Data/RACPostgreSQLDbContext.cs",
+                "region": {
+                  "startLine": 12,
+                  "startColumn": 28,
+                  "endLine": 12,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Bookings\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/JORGE%20MARTINEZ%20S/Desktop/UCB/2026-1/Taller%20de%20Dise%C3%B1o%20de%20Software/Primer%20Bloque/Recup%20parcial%201/RAC_Recuperatorio/rac-be-simplified/Data/RACPostgreSQLDbContext.cs",
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 16,
+                  "endLine": 9,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/JORGE%20MARTINEZ%20S/Desktop/UCB/2026-1/Taller%20de%20Dise%C3%B1o%20de%20Software/Primer%20Bloque/Recup%20parcial%201/RAC_Recuperatorio/rac-be-simplified/Data/RACPostgreSQLDbContext.cs",
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 31,
+                  "endLine": 13,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"RoomGuests\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/JORGE%20MARTINEZ%20S/Desktop/UCB/2026-1/Taller%20de%20Dise%C3%B1o%20de%20Software/Primer%20Bloque/Recup%20parcial%201/RAC_Recuperatorio/rac-be-simplified/Data/RACPostgreSQLDbContext.cs",
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 16,
+                  "endLine": 9,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/JORGE%20MARTINEZ%20S/Desktop/UCB/2026-1/Taller%20de%20Dise%C3%B1o%20de%20Software/Primer%20Bloque/Recup%20parcial%201/RAC_Recuperatorio/rac-be-simplified/Data/RACPostgreSQLDbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 33,
+                  "endLine": 14,
+                  "endColumn": 43
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1860",
+          "level": "note",
+          "message": "Es preferible comparar \"Count\" con 0 en lugar de usar \"Any()\", tanto por claridad como por rendimiento.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/JORGE%20MARTINEZ%20S/Desktop/UCB/2026-1/Taller%20de%20Dise%C3%B1o%20de%20Software/Primer%20Bloque/Recup%20parcial%201/RAC_Recuperatorio/rac-be-simplified/Controller/BookingController.cs",
+                "region": {
+                  "startLine": 32,
+                  "startColumn": 57,
+                  "endLine": 32,
+                  "endColumn": 86
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "DiagnosticPropertyKey": "Count"
+            }
+          }
+        },
+        {
+          "ruleId": "CA1860",
+          "level": "note",
+          "message": "Es preferible comparar \"Count\" con 0 en lugar de usar \"Any()\", tanto por claridad como por rendimiento.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/JORGE%20MARTINEZ%20S/Desktop/UCB/2026-1/Taller%20de%20Dise%C3%B1o%20de%20Software/Primer%20Bloque/Recup%20parcial%201/RAC_Recuperatorio/rac-be-simplified/Services/BookingService.cs",
+                "region": {
+                  "startLine": 107,
+                  "startColumn": 41,
+                  "endLine": 107,
+                  "endColumn": 55
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "DiagnosticPropertyKey": "Count"
+            }
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "note",
+          "message": "El miembro \"ResolveState\" no tiene acceso a los datos de la instancia y se puede marcar como static.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/JORGE%20MARTINEZ%20S/Desktop/UCB/2026-1/Taller%20de%20Dise%C3%B1o%20de%20Software/Primer%20Bloque/Recup%20parcial%201/RAC_Recuperatorio/rac-be-simplified/Services/BookingService.cs",
+                "region": {
+                  "startLine": 32,
+                  "startColumn": 31,
+                  "endLine": 32,
+                  "endColumn": 43
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "ASP0018",
+          "level": "note",
+          "message": "Unused route parameter 'newGuest'",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/JORGE%20MARTINEZ%20S/Desktop/UCB/2026-1/Taller%20de%20Dise%C3%B1o%20de%20Software/Primer%20Bloque/Recup%20parcial%201/RAC_Recuperatorio/rac-be-simplified/Controller/GuestController.cs",
+                "region": {
+                  "startLine": 18,
+                  "startColumn": 24,
+                  "endLine": 18,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "RouteParameterInsertIndex": "-1",
+              "RouteParameterIsOptional": "False",
+              "RouteParameterName": "newGuest",
+              "RouteParameterPolicy": ""
+            }
+          }
+        },
+        {
+          "ruleId": "ASP0018",
+          "level": "note",
+          "message": "Unused route parameter 'newGuestList'",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/JORGE%20MARTINEZ%20S/Desktop/UCB/2026-1/Taller%20de%20Dise%C3%B1o%20de%20Software/Primer%20Bloque/Recup%20parcial%201/RAC_Recuperatorio/rac-be-simplified/Controller/GuestController.cs",
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 29,
+                  "endLine": 25,
+                  "endColumn": 43
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "RouteParameterInsertIndex": "-1",
+              "RouteParameterIsOptional": "False",
+              "RouteParameterName": "newGuestList",
+              "RouteParameterPolicy": ""
+            }
+          }
+        }
+      ],
+      "rules": {
+        "ASP0018": {
+          "id": "ASP0018",
+          "shortDescription": "Unused route parameter",
+          "defaultLevel": "note",
+          "helpUri": "https://aka.ms/aspnet/analyzers",
+          "properties": {
+            "category": "Usage",
+            "isEnabledByDefault": true
+          }
+        },
+        "CA1822": {
+          "id": "CA1822",
+          "shortDescription": "Marcar miembros como static",
+          "fullDescription": "Los miembros que no tienen acceso a datos de instancia o que llaman a métodos de instancia se pueden marcar como static. Después de marcar los métodos como static, el compilador emitirá los sitios de llamada no virtuales para estos miembros. Esto puede proporcionar una mejora apreciable del rendimiento del código sensible al rendimiento.",
+          "defaultLevel": "note",
+          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1822",
+          "properties": {
+            "category": "Performance",
+            "isEnabledByDefault": true,
+            "tags": [
+              "PortedFromFxCop",
+              "Telemetry",
+              "EnabledRuleInAggressiveMode"
+            ]
+          }
+        },
+        "CA1860": {
+          "id": "CA1860",
+          "shortDescription": "Evitar usar el método de extensión \"Enumerable.Any()\"",
+          "fullDescription": "Es preferible usar las propiedades \"IsEmpty\", \"Count\" o \"Length\", si hay alguna disponible, en lugar de llamar a \"Enumerable.Any()\". La intención es más clara y tiene un mejor rendimiento que usar el método de extensión \"Enumerable.Any()\".",
+          "defaultLevel": "note",
+          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1860",
+          "properties": {
+            "category": "Performance",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Telemetry",
+              "EnabledRuleInAggressiveMode"
+            ]
+          }
+        },
+        "CS8618": {
+          "id": "CS8618",
+          "shortDescription": "Un campo que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required\" o declararlo como un valor que acepta valores NULL.",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8618)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
