@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\JORGE MARTINEZ S\\Desktop\\UCB\\2026-1\\Taller de Diseño de Software\\Primer Bloque\\Recup parcial 1\\RAC_Recuperatorio\\RAC_Recuperatorio.csproj": {}
+    "c:\\Users\\JORGE MARTINEZ S\\Desktop\\UCB\\2026-1\\Taller de Diseño de Software\\Primer Bloque\\Recup parcial 1\\RAC_Recuperatorio\\RAC_Recuperatorio.csproj": {}
   },
   "projects": {
-    "C:\\Users\\JORGE MARTINEZ S\\Desktop\\UCB\\2026-1\\Taller de Diseño de Software\\Primer Bloque\\Recup parcial 1\\RAC_Recuperatorio\\RAC_Recuperatorio.csproj": {
+    "c:\\Users\\JORGE MARTINEZ S\\Desktop\\UCB\\2026-1\\Taller de Diseño de Software\\Primer Bloque\\Recup parcial 1\\RAC_Recuperatorio\\RAC_Recuperatorio.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\JORGE MARTINEZ S\\Desktop\\UCB\\2026-1\\Taller de Diseño de Software\\Primer Bloque\\Recup parcial 1\\RAC_Recuperatorio\\RAC_Recuperatorio.csproj",
+        "projectUniqueName": "c:\\Users\\JORGE MARTINEZ S\\Desktop\\UCB\\2026-1\\Taller de Diseño de Software\\Primer Bloque\\Recup parcial 1\\RAC_Recuperatorio\\RAC_Recuperatorio.csproj",
         "projectName": "RAC_Recuperatorio",
-        "projectPath": "C:\\Users\\JORGE MARTINEZ S\\Desktop\\UCB\\2026-1\\Taller de Diseño de Software\\Primer Bloque\\Recup parcial 1\\RAC_Recuperatorio\\RAC_Recuperatorio.csproj",
+        "projectPath": "c:\\Users\\JORGE MARTINEZ S\\Desktop\\UCB\\2026-1\\Taller de Diseño de Software\\Primer Bloque\\Recup parcial 1\\RAC_Recuperatorio\\RAC_Recuperatorio.csproj",
         "packagesPath": "C:\\Users\\JORGE MARTINEZ S\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\JORGE MARTINEZ S\\Desktop\\UCB\\2026-1\\Taller de Diseño de Software\\Primer Bloque\\Recup parcial 1\\RAC_Recuperatorio\\obj\\",
+        "outputPath": "c:\\Users\\JORGE MARTINEZ S\\Desktop\\UCB\\2026-1\\Taller de Diseño de Software\\Primer Bloque\\Recup parcial 1\\RAC_Recuperatorio\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

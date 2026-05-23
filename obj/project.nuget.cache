@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "PwBIZtnd4kw=",
+  "dgSpecHash": "3y6z+bxZMYA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\JORGE MARTINEZ S\\Desktop\\UCB\\2026-1\\Taller de Diseño de Software\\Primer Bloque\\Recup parcial 1\\RAC_Recuperatorio\\RAC_Recuperatorio.csproj",
+  "projectFilePath": "c:\\Users\\JORGE MARTINEZ S\\Desktop\\UCB\\2026-1\\Taller de Diseño de Software\\Primer Bloque\\Recup parcial 1\\RAC_Recuperatorio\\RAC_Recuperatorio.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\JORGE MARTINEZ S\\.nuget\\packages\\coverlet.collector\\6.0.4\\coverlet.collector.6.0.4.nupkg.sha512",
     "C:\\Users\\JORGE MARTINEZ S\\.nuget\\packages\\microsoft.codecoverage\\17.14.1\\microsoft.codecoverage.17.14.1.nupkg.sha512",
