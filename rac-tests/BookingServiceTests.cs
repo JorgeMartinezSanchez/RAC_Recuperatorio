@@ -32,9 +32,7 @@ namespace rec_be.Tests.Services
                 _mockStrategyFactory.Object);
         }
 
-        // =========================================================
-        // PRUEBA 1: CA-2 - Validación de fechas
-        // =========================================================
+        // PRUEBA 1: Validación de fechas
         [Fact]
         public void ValidateDate_EndDateAfterStartDate_ReturnsTrue()
         {
@@ -63,9 +61,7 @@ namespace rec_be.Tests.Services
             Assert.False(result);
         }
 
-        // =========================================================
-        // PRUEBA 2: CA-2 - CreateBooking lanza excepción con fechas inválidas
-        // =========================================================
+        // PRUEBA 2: CreateBooking lanza excepción con fechas inválidas
         [Fact]
         public async Task CreateBooking_WithInvalidDates_ThrowsException()
         {
@@ -85,9 +81,7 @@ namespace rec_be.Tests.Services
             Assert.Contains("End date must be after start date", exception.Message);
         }
 
-        // =========================================================
-        // PRUEBA 3: CA-1 - No se puede reservar habitación ocupada
-        // =========================================================
+        // PRUEBA 3: No se puede reservar habitación ocupada
         [Fact]
         public async Task CreateBooking_WithOccupiedRoom_ThrowsException()
         {
@@ -118,9 +112,7 @@ namespace rec_be.Tests.Services
             Assert.Contains("Room is currently occupied", exception.Message);
         }
 
-        // =========================================================
-        // PRUEBA 4: CA-4 - Validación de cantidad de huéspedes
-        // =========================================================
+        // PRUEBA 4: Validación de cantidad de huéspedes
         [Theory]
         [InlineData(1, 1, true)]   // 1 huésped en habitación Simple (capacidad 1) -> Válido
         [InlineData(2, 1, false)]  // 2 huéspedes en habitación Simple -> Inválido
@@ -157,9 +149,7 @@ namespace rec_be.Tests.Services
             Assert.Equal(expected, result);
         }
 
-        // =========================================================
-        // PRUEBA 5: HU-04 - CheckIn cambia estado a "active"
-        // =========================================================
+        // PRUEBA 5: CheckIn cambia estado a "active"
         [Fact]
         public async Task CheckIn_WithPendingBooking_ChangesStatusToActive()
         {
@@ -199,9 +189,7 @@ namespace rec_be.Tests.Services
             Assert.True(room.Occupied);
         }
 
-        // =========================================================
-        // PRUEBA 6: HU-08 - CheckOut cambia estado a "finished"
-        // =========================================================
+        // PRUEBA 6: CheckOut cambia estado a "finished"
         [Fact]
         public async Task CheckOut_WithActiveBooking_ChangesStatusToFinished()
         {

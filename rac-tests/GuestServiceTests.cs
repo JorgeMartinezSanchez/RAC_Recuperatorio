@@ -21,9 +21,7 @@ namespace rec_be.Tests.Services
             _service = new GuestService(_mockGuestRepo.Object);
         }
 
-        // =========================================================
-        // PRUEBA 8: HU-01 - Agregar huésped nuevo
-        // =========================================================
+        // PRUEBA 8: Agregar huésped nuevo
         [Fact]
         public async Task AddGuest_NewGuest_CreatesAndReturnsGuest()
         {
@@ -63,13 +61,10 @@ namespace rec_be.Tests.Services
             Assert.Equal("12345678", result.IDCard);
         }
 
-        // =========================================================
-        // PRUEBA 9: HU-01 - No agregar huésped duplicado
-        // =========================================================
+        // PRUEBA 9: No agregar huésped duplicado
         [Fact]
         public async Task AddGuest_DuplicateGuest_ThrowsException()
         {
-            // Arrange
             var request = new GuestRequestDTO
             {
                 FirstName = "Juan",
@@ -89,9 +84,7 @@ namespace rec_be.Tests.Services
             Assert.Contains("already exists", exception.Message);
         }
 
-        // =========================================================
         // PRUEBA 10: Obtener huéspedes por BookingId
-        // =========================================================
         [Fact]
         public async Task GetGuestsFromBookingId_ReturnsGuests()
         {
