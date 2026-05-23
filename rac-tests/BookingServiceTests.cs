@@ -270,9 +270,17 @@ namespace rec_be.Tests.Services
         [Fact]
         public async Task GuestIds_Count_Test()
         {
-            var guestIds = new List<int>(); // VACIO
             
-            _service.
+            var request = new BookingRequestDTO
+            {
+                RoomId = 1,
+                StartDate = new DateOnly(2025, 6, 1),
+                EndDate = new DateOnly(2025, 6, 5),
+                GuestIds = new List<int> { }
+            };
+
+            await _service.CreateBooking(request, request.GuestIds);
+            Assert.False(request.GuestIds.Count() == 0);
         }
     }
 }

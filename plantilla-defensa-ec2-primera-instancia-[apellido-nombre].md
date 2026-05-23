@@ -15,7 +15,7 @@
 
 ## Code smell a refactorizar
 
-**Tipo de code smell:**
+**1**
 > Enpoints sin usar en el Controlador de Guests: ControllerGuests.cs
 
 **¿Por qué este fragmento es un code smell? ¿Qué problema real podría causar si se deja así?**
@@ -54,6 +54,38 @@
         }*/
 ```
 
+**2:**
+> Uso de Any() en el Servicio de Guests
+
+**¿Por qué este fragmento es un code smell? ¿Qué problema real podría causar si se deja así?**
+> Por que no deja mucha claridad de lo que se quiere validar si las guestids del booking entrante existen o no.
+
+**Código original (snippet — sin capturas):**
+```
+                if (guestIds != null && guestIds.Any())
+                {
+                    foreach (var guestId in guestIds)
+                    {
+                        Console.WriteLine($"Checking guest ID: {guestId}");
+                    }
+                    
+                    await _bookingRepo.AssignGuestsToBooking(created.Id, guestIds);
+                }
+```
+
+**Código refactorizado (snippet):**
+```
+                if (guestIds != null && guestIds.Count() != 0)
+                {
+                    foreach (var guestId in guestIds)
+                    {
+                        Console.WriteLine($"Checking guest ID: {guestId}");
+                    }
+                    
+                    await _bookingRepo.AssignGuestsToBooking(created.Id, guestIds);
+                }
+```
+
 **Commit de la refactorización:**
 ```
 refactor(backend): Comentar enpoints sin utilizar en el Controlador de Guests, porque pueden ser de utilidad en algun futuro
@@ -64,26 +96,41 @@ refactor(backend): Reemplazar _.any()_ con _.count() != 0_ para dar mas segurida
 
 ## Paso 3 · Prueba unitaria sobre el código refactorizado
 
-Escribe una prueba unitaria que cubra la lógica del código que acabas de refactorizar.
 
-> ⚠️ Solo se aceptan pruebas sobre lógica de negocio.
-> No se aceptan pruebas sobre controllers, repositorios, DbContext ni configuraciones.
-> ⚠️ Tanto el code smell refactorizado como esta prueba unitaria deben ser **código nuevo** — no reutilices ni copies trabajo del reporte entregado entre semana.
-
-**Historia de Usuario relacionada:** [código o título de la HU]
+**Historia de Usuario relacionada:** Crear Reserva para hotel, no me acuerdo
 
 **Código a probar (snippet):**
 ```
-// método o función sobre el que se hace la prueba
+                if (guestIds != null && guestIds.Count() != 0)
+                {
+                    foreach (var guestId in guestIds)
+                    {
+                        Console.WriteLine($"Checking guest ID: {guestId}");
+                    }
+                    
+                    await _bookingRepo.AssignGuestsToBooking(created.Id, guestIds);
+                }
 ```
 
 **Prueba unitaria (snippet):**
 ```
-// prueba escrita — patrón AAA
+        [Fact]
+        public async Task GuestIds_Count_Test()
+        {
+            //Arrange
+            var request = new BookingRequestDTO
+            {
+                RoomId = 1,
+                StartDate = new DateOnly(2025, 6, 1),
+                EndDate = new DateOnly(2025, 6, 5),
+                GuestIds = new List<int> { }
+            };
+            // act
+            await _service.CreateBooking(request, request.GuestIds);
+            // Assert
+            Assert.False(request.GuestIds.Count() == 0);
+        }
 ```
-
-**En tu prueba, ¿dónde está el Arrange, el Act y el Assert? Explícalo brevemente:**
-> [Tu respuesta]
 
 **Commit de la prueba:**
 ```
