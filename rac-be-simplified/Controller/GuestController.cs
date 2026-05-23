@@ -15,7 +15,7 @@ namespace rec_be.Controller
             guestService = _guestService;
         }
 
-        [HttpPost("new/{newGuest}")]
+        /*[HttpPost("new/{newGuest}")]
         public async Task<IActionResult> NewGuest([FromBody] GuestRequestDTO newGuest)
         {
             var guest = await guestService.AddGuest(newGuest);
@@ -27,7 +27,7 @@ namespace rec_be.Controller
         {
             var guestList = await guestService.AddGuestList(newguestList);
             return Ok(guestList);
-        }
+        }*/
 
         [HttpGet("from/{BookingId}")]
         public async Task<IActionResult> GetGuestsFromBookingId(int BookingId)

@@ -6,33 +6,52 @@
 
 ---
 
-## Paso 1 · Reporte de cobertura actual
-
-Antes de tocar cualquier código, genera el reporte de cobertura del proyecto que vas a trabajar.
+## Reporte de cobertura actual
 
 - Herramienta utilizada: *dotnet reportgenereator*
 - Nombre de archivo del reporte generado: *dotnet_report.zip* 
 
 ---
 
-## Paso 2 · Code smell a refactorizar
-
-Identifica un code smell en tu código y refactorízalo.
+## Code smell a refactorizar
 
 **Tipo de code smell:**
-> [nombre del tipo, ej: Long Method]
+> Enpoints sin usar en el Controlador de Guests: ControllerGuests.cs
 
 **¿Por qué este fragmento es un code smell? ¿Qué problema real podría causar si se deja así?**
-> [Tu respuesta — en tus palabras]
+> Porque un pedazo de condigo sin usar puede afectar el rendimiento y simplemente ser una carga para la api?
 
 **Código original (snippet — sin capturas):**
 ```
-// pegar aquí el código antes de refactorizar
+        public async Task<IActionResult> NewGuest([FromBody] GuestRequestDTO newGuest)
+        {
+            var guest = await guestService.AddGuest(newGuest);
+            return Ok(guest);
+        }
+
+        [HttpPost("new/many/{newGuestList}")]
+        public async Task<IActionResult> NewGuestList([FromBody] List<GuestRequestDTO> newguestList)
+        {
+            var guestList = await guestService.AddGuestList(newguestList);
+            return Ok(guestList);
+        }
 ```
 
 **Código refactorizado (snippet):**
 ```
-// pegar aquí el código después de refactorizar
+        /*[HttpPost("new/{newGuest}")]
+        public async Task<IActionResult> NewGuest([FromBody] GuestRequestDTO newGuest)
+        {
+            var guest = await guestService.AddGuest(newGuest);
+            return Ok(guest);
+        }
+
+        [HttpPost("new/many/{newGuestList}")]
+        public async Task<IActionResult> NewGuestList([FromBody] List<GuestRequestDTO> newguestList)
+        {
+            var guestList = await guestService.AddGuestList(newguestList);
+            return Ok(guestList);
+        }*/
 ```
 
 **Commit de la refactorización:**
