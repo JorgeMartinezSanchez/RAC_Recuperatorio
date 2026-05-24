@@ -134,7 +134,7 @@ refactor(backend): Reemplazar _.any()_ con _.count() != 0_ para dar mas segurida
 
 **Commit de la prueba:**
 ```
-test([scope]): descripción breve
+test(backend): Update assembly informational version and refactor GuestIds_Count_Test for clarity
 ```
 *Ejemplos:*
 ```
@@ -151,7 +151,7 @@ Genera nuevamente el reporte de cobertura con la prueba recién escrita.
 - Link al reporte generado: [link o nombre del archivo adjunto en el .zip]
 
 **¿Qué cambió respecto al reporte anterior? ¿Por qué subió (o no subió) la cobertura?**
-> [Tu respuesta]
+> Solo hice una prueba unitaria por que solo existe un code smell valido de roselyn
 
 ---
 
@@ -162,28 +162,28 @@ Genera nuevamente el reporte de cobertura con la prueba recién escrita.
 **Pregunta 1**
 ¿Por qué no es suficiente probar una aplicación solo haciendo clic en la interfaz?
 
-> [Tu respuesta]
+> Por que las clases concretas pueden tener logica diferente
 
 ---
 
 **Pregunta 2**
 ¿Qué significa que una prueba sea "unitaria"? ¿Qué tan pequeña debe ser la unidad que prueba?
 
-> [Tu respuesta]
+> Debe ser pequena para evitar errores mas grandes a futuro y no se haga un caos buscar la causa raiz
 
 ---
 
 **Pregunta 3**
 ¿Qué es la cobertura de código? ¿Un 100% de cobertura garantiza que el software no tiene errores?
 
-> [Tu respuesta]
+> Hmmm probablemente si, si esta al 100% es por que significa que cubre gran parte del codigo
 
 ---
 
 **Pregunta 4**
 Después de refactorizar, ¿cómo sabes que el código sigue funcionando igual? ¿Qué papel jugó la prueba unitaria ahí?
 
-> [Tu respuesta]
+> Por que la prueba unitaria era muy simple
 
 ---
 
