@@ -268,19 +268,35 @@ namespace rec_be.Tests.Services
         }
 
         [Fact]
-        public async Task GuestIds_Count_Test()
+        public async Task CreateBooking_WithEmptyGuestList_ThrowsExceptionDueToGuestCount()
         {
-            
+            // Arrange
             var request = new BookingRequestDTO
             {
                 RoomId = 1,
                 StartDate = new DateOnly(2025, 6, 1),
                 EndDate = new DateOnly(2025, 6, 5),
-                GuestIds = new List<int> { }
+                GuestIds = new List<int> { } // vacía
             };
 
-            await _service.CreateBooking(request, request.GuestIds);
-            Assert.False(request.GuestIds.Count() == 0);
+            var room = new Room
+            {
+                Id = 1,
+                RoomNumber = "101",
+                Occupied = false,
+                RoomType = new RoomType { TypeName = "Simple", Price = 100, Capacity = 1 }
+            };
+
+            var strategy = new SimpleRoomStrategy(room);
+
+            _mockRoomRepo.Setup(r => r.GetRoomWithTypeById(1))
+                .ReturnsAsync(room);
+            _mockStrategyFactory.Setup(f => f.CreateStrategy(room))
+                .Returns(strategy);
+
+            // Act & Assert — 0 guests no pasa la validación de capacidad
+            await Assert.ThrowsAsync<Exception>(
+                () => _service.CreateBooking(request, request.GuestIds));
         }
     }
 }

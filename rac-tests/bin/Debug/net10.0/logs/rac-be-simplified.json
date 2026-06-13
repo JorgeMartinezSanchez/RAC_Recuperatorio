@@ -221,9 +221,9 @@
           }
         },
         {
-          "ruleId": "CA1860",
+          "ruleId": "CA1829",
           "level": "note",
-          "message": "Es preferible comparar \"Count\" con 0 en lugar de usar \"Any()\", tanto por claridad como por rendimiento.",
+          "message": "Use la propiedad \"Count\" en lugar de Enumerable.Count().",
           "locations": [
             {
               "resultFile": {
@@ -232,7 +232,7 @@
                   "startLine": 107,
                   "startColumn": 41,
                   "endLine": 107,
-                  "endColumn": 55
+                  "endColumn": 57
                 }
               }
             }
@@ -240,7 +240,7 @@
           "properties": {
             "warningLevel": 1,
             "customProperties": {
-              "DiagnosticPropertyKey": "Count"
+              "PropertyNameKey": "Count"
             }
           }
         },
@@ -264,73 +264,9 @@
           "properties": {
             "warningLevel": 1
           }
-        },
-        {
-          "ruleId": "ASP0018",
-          "level": "note",
-          "message": "Unused route parameter 'newGuest'",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/JORGE%20MARTINEZ%20S/Desktop/UCB/2026-1/Taller%20de%20Dise%C3%B1o%20de%20Software/Primer%20Bloque/Recup%20parcial%201/RAC_Recuperatorio/rac-be-simplified/Controller/GuestController.cs",
-                "region": {
-                  "startLine": 18,
-                  "startColumn": 24,
-                  "endLine": 18,
-                  "endColumn": 34
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1,
-            "customProperties": {
-              "RouteParameterInsertIndex": "-1",
-              "RouteParameterIsOptional": "False",
-              "RouteParameterName": "newGuest",
-              "RouteParameterPolicy": ""
-            }
-          }
-        },
-        {
-          "ruleId": "ASP0018",
-          "level": "note",
-          "message": "Unused route parameter 'newGuestList'",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/JORGE%20MARTINEZ%20S/Desktop/UCB/2026-1/Taller%20de%20Dise%C3%B1o%20de%20Software/Primer%20Bloque/Recup%20parcial%201/RAC_Recuperatorio/rac-be-simplified/Controller/GuestController.cs",
-                "region": {
-                  "startLine": 25,
-                  "startColumn": 29,
-                  "endLine": 25,
-                  "endColumn": 43
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1,
-            "customProperties": {
-              "RouteParameterInsertIndex": "-1",
-              "RouteParameterIsOptional": "False",
-              "RouteParameterName": "newGuestList",
-              "RouteParameterPolicy": ""
-            }
-          }
         }
       ],
       "rules": {
-        "ASP0018": {
-          "id": "ASP0018",
-          "shortDescription": "Unused route parameter",
-          "defaultLevel": "note",
-          "helpUri": "https://aka.ms/aspnet/analyzers",
-          "properties": {
-            "category": "Usage",
-            "isEnabledByDefault": true
-          }
-        },
         "CA1822": {
           "id": "CA1822",
           "shortDescription": "Marcar miembros como static",
@@ -342,6 +278,21 @@
             "isEnabledByDefault": true,
             "tags": [
               "PortedFromFxCop",
+              "Telemetry",
+              "EnabledRuleInAggressiveMode"
+            ]
+          }
+        },
+        "CA1829": {
+          "id": "CA1829",
+          "shortDescription": "Usar la propiedad Length/Count en lugar de Count() cuando esté disponible",
+          "fullDescription": "Enumerable.Count() posiblemente enumera la secuencia, mientras que una propiedad Length/Count es un acceso directo.",
+          "defaultLevel": "note",
+          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1829",
+          "properties": {
+            "category": "Performance",
+            "isEnabledByDefault": true,
+            "tags": [
               "Telemetry",
               "EnabledRuleInAggressiveMode"
             ]
