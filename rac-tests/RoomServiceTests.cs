@@ -95,6 +95,6 @@ namespace rec_be.Tests.Services
             // Assert
             Assert.Equal(2, result.Count);
             Assert.All(result, r => Assert.Equal("Simple", r.RoomType));
-        }      
+        }
     }
 }

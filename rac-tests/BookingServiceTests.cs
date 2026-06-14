@@ -298,5 +298,41 @@ namespace rec_be.Tests.Services
             await Assert.ThrowsAsync<Exception>(
                 () => _service.CreateBooking(request, request.GuestIds));
         }
+
+        [Fact]
+        public async Task Overlaps_WhenBookingIsAdjacentButNotOverlapping_ReturnsFalse()
+        {
+            Room room = new Room
+            {
+                Id = 1,
+                RoomNumber = "101",
+                Occupied = false,
+                RoomType = new RoomType { TypeName = "Simple", Price = 100, Capacity = 1 }
+            };
+
+            Booking request_1 = new Booking
+            {
+                RoomId = 1,
+                StartDate = new DateOnly(2025, 6, 1),
+                EndDate = new DateOnly(2025, 6, 5)
+            };
+
+            BookingRequestDTO request_2 = new BookingRequestDTO
+            {
+                RoomId = 1,
+                StartDate = new DateOnly(2025, 6, 5),
+                EndDate = new DateOnly(2025, 6, 10)
+            };
+
+            _mockRoomRepo.Setup(r => r.GetRoomWithTypeById(1))
+                .ReturnsAsync(room);
+            _mockBookingRepo.Setup(b => b.GetAllBookings())
+                .ReturnsAsync(new List<Booking> { request_1 });
+            _mockBookingRepo.Setup(b => b.GetBooking(1))
+                .ReturnsAsync(request_1);
+
+            var booking = await _service.Overlaps(request_2);
+            Assert.False(booking);
+        }
     }
 }
